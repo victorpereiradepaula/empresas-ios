@@ -7,6 +7,18 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+protocol LoginViewModelProtocol {
+    
+    var emailRelay: BehaviorRelay<String?> { get }
+    var passwordRelay: BehaviorRelay<String?> { get }
+    var emailError: Observable<String?> { get }
+    var passwordError: Observable<String?> { get }
+    
+    func didTapLoginButton()
+}
 
 final class LoginViewController: UIViewController {
     
@@ -15,15 +27,17 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var welcomeLabel: UILabel!
     
     private lazy var emailTextField: TextField = {
-        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Email", error: .just(nil), delegate: self))
+        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Email", textRelay: viewModel.emailRelay, error: viewModel.emailError, image: nil, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    
     private lazy var passwordTextField: TextField = {
-        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Senha", error: .just("Teste"), delegate: self))
+        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Senha", textRelay: viewModel.passwordRelay, error: viewModel.passwordError, image: .eyeIcon, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -36,15 +50,37 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    private let viewModel: LoginViewModelProtocol
+    private let disposeBag = DisposeBag()
+    
+    init(viewModel: LoginViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: "LoginViewController", bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         applyLayout()
+        bind()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
+    }
+    
+    private func bind() {
+        
+        loginButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.didTapLoginButton()
+            }
+            .disposed(by: disposeBag)
     }
     
     private func applyLayout() {
@@ -79,14 +115,14 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.welcomeLabel.isHidden = true
-            self?.headerViewHeightConstraint.constant = 200
+            self?.headerViewHeightConstraint.constant = 150
         })
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.welcomeLabel.isHidden = false
             self?.headerViewHeightConstraint.constant = 250
         })

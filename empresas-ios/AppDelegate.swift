@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         guard #available(iOS 13.0, *) else {
             let window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+            window.rootViewController = LoginViewController(viewModel: LoginViewModel())
             window.makeKeyAndVisible()
             
             self.window = window

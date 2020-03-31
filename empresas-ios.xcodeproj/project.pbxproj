@@ -28,8 +28,10 @@
 		8DC72822243355AA00176FBD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC72821243355AA00176FBD /* Colors.swift */; };
 		8DC728242433562600176FBD /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728232433562600176FBD /* Fonts.swift */; };
 		8DC7282624335DB600176FBD /* TextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7282524335DB600176FBD /* TextFieldViewModel.swift */; };
-		8DC728282433983E00176FBD /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728272433983E00176FBD /* UITextFieldExtensions.swift */; };
+		8DC728282433983E00176FBD /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728272433983E00176FBD /* TextFieldExtension.swift */; };
 		8DC7282A2433A52300176FBD /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728292433A52300176FBD /* Images.swift */; };
+		8DC7282C2433EAD300176FBD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7282B2433EAD300176FBD /* LoginViewModel.swift */; };
+		8DC728352433FBAA00176FBD /* TwoWayDataBind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728342433FBAA00176FBD /* TwoWayDataBind.swift */; };
 		95891ED6B2DD070C0DC6BB2C /* Pods_empresas_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E1ABBE0F03BCD5305C79F1 /* Pods_empresas_iosTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,8 +74,10 @@
 		8DC72821243355AA00176FBD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8DC728232433562600176FBD /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		8DC7282524335DB600176FBD /* TextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldViewModel.swift; sourceTree = "<group>"; };
-		8DC728272433983E00176FBD /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
+		8DC728272433983E00176FBD /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		8DC728292433A52300176FBD /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		8DC7282B2433EAD300176FBD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8DC728342433FBAA00176FBD /* TwoWayDataBind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayDataBind.swift; sourceTree = "<group>"; };
 		D2BF8A4F938A093A03229BE0 /* Pods-empresas-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-iosTests.release.xcconfig"; path = "Target Support Files/Pods-empresas-iosTests/Pods-empresas-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		E356FC47F7B6ECC18AFB2B4F /* Pods_empresas_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_empresas_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -168,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC728002432C31500176FBD /* textField */,
+				8DC7282B2433EAD300176FBD /* LoginViewModel.swift */,
 				8DC727FA2432B3B600176FBD /* LoginViewController.swift */,
 				8DC727FB2432B3B600176FBD /* LoginViewController.xib */,
 			);
@@ -234,7 +239,8 @@
 				8DC728292433A52300176FBD /* Images.swift */,
 				8DC72821243355AA00176FBD /* Colors.swift */,
 				8DC728232433562600176FBD /* Fonts.swift */,
-				8DC728272433983E00176FBD /* UITextFieldExtensions.swift */,
+				8DC728272433983E00176FBD /* TextFieldExtension.swift */,
+				8DC728342433FBAA00176FBD /* TwoWayDataBind.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -458,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC727FC2432B3B600176FBD /* LoginViewController.swift in Sources */,
+				8DC728352433FBAA00176FBD /* TwoWayDataBind.swift in Sources */,
 				8DC727F42432B1D900176FBD /* Portfolio.swift in Sources */,
 				8DC72822243355AA00176FBD /* Colors.swift in Sources */,
 				8DC727F22432B19700176FBD /* EnterpriseType.swift in Sources */,
@@ -465,11 +472,12 @@
 				8DC727F02432B17100176FBD /* Enterprise.swift in Sources */,
 				8DC727F82432B24C00176FBD /* User.swift in Sources */,
 				8DC7282A2433A52300176FBD /* Images.swift in Sources */,
+				8DC7282C2433EAD300176FBD /* LoginViewModel.swift in Sources */,
 				8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */,
 				8DC7282624335DB600176FBD /* TextFieldViewModel.swift in Sources */,
 				8DC728242433562600176FBD /* Fonts.swift in Sources */,
 				8DC727F62432B21800176FBD /* Investor.swift in Sources */,
-				8DC728282433983E00176FBD /* UITextFieldExtensions.swift in Sources */,
+				8DC728282433983E00176FBD /* TextFieldExtension.swift in Sources */,
 				8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

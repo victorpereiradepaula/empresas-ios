@@ -14,6 +14,7 @@ protocol TextFieldProtocol {
     
     var placeholder: String { get }
     var delegate: UITextFieldDelegate? { get }
+    var textRelay: BehaviorRelay<String?> { get }
     var placeholderColor: Driver<UIColor> { get }
     var errorMessage: Driver<String?> { get }
     var textFieldBorderColor: Driver<UIColor> { get }
@@ -61,6 +62,10 @@ final class TextField: UIView {
         if let delegate = viewModel.delegate {
             textField.delegate = delegate
         }
+        
+        textField.rx.text
+            .bind(twoWay: viewModel.textRelay)
+            .disposed(by: disposeBag)
         
         viewModel.placeholderColor
             .drive(onNext: { [weak self] (textColor) in

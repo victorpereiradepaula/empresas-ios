@@ -11,13 +11,17 @@ import RxCocoa
 
 final class TextFieldViewModel {
     
-    private let error: Observable<String?>
     let placeholder: String
+    let textRelay: BehaviorRelay<String?>
     weak var delegate: UITextFieldDelegate?
+    private let error: Observable<String?>
+    private let image: UIImage?
     
-    init(placeholder: String, error: Observable<String?>, delegate: UITextFieldDelegate) {
+    init(placeholder: String, textRelay: BehaviorRelay<String?>, error: Observable<String?>, image: UIImage?, delegate: UITextFieldDelegate) {
         self.placeholder = placeholder
+        self.textRelay = textRelay
         self.error = error
+        self.image = image
         self.delegate = delegate
     }
 }
@@ -39,7 +43,8 @@ extension TextFieldViewModel: TextFieldProtocol {
     }
     
     var textFieldImage: Driver<UIImage?> {
-        .just(.eyeIcon)
+        error.map { [weak self] in return $0 == nil ? self?.image : .errorIcon }
+            .asDriver(onErrorJustReturn: nil)
     }
     
     var textFieldImageColor: Driver<UIColor?> {
