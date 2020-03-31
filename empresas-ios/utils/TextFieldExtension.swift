@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxGesture
 
 extension UITextField {
     
@@ -18,7 +20,7 @@ extension UITextField {
         rightViewMode = .always
     }
     
-    func setRightView(image: UIImage?, color: UIColor?) {
+    func setRightView(image: UIImage?, color: UIColor?, action: @escaping (() -> ())) {
         if let image = image, let color = color {
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 48))
             imageView.image = image
@@ -29,6 +31,12 @@ extension UITextField {
             rightView = containerView
             rightViewMode = .always
             tintColor = color
+            
+            _ = imageView.rx.tapGesture()
+                .when(.recognized)
+                .takeUntil(rx.deallocated)
+                .bind { _ in action() }
+            
         } else {
             rightView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: frame.size.height))
             rightViewMode = .always

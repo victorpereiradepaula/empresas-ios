@@ -7,6 +7,7 @@ target 'empresas-ios' do
   pod 'SwiftLint'
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'RxGesture'
 
   target 'empresas-iosTests' do
     inherit! :search_paths

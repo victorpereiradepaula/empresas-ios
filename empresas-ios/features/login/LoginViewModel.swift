@@ -15,7 +15,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     let passwordRelay = BehaviorRelay<String?>(value: nil)
     
     private let canShowErrorSubject = BehaviorSubject<Bool>(value: false)
-    private let apiErrorRelay = BehaviorRelay<String?>(value: nil)
+    private let apiErrorRelay = BehaviorSubject<String?>(value: nil)
     
     var emailError: Observable<String?> {
         Observable.combineLatest(emailRelay, canShowErrorSubject)

@@ -13,4 +13,6 @@ extension UIImage {
     static let errorIcon = UIImage(named: "ic_error")!.withRenderingMode(.alwaysTemplate)
     
     static let eyeIcon = UIImage(named: "ic_eye")!.withRenderingMode(.alwaysTemplate)
+        
+    static let eyeIconOff = UIImage(named: "ic_eye_off")!.withRenderingMode(.alwaysTemplate)
 }

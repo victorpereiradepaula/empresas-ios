@@ -9,25 +9,63 @@
 import RxSwift
 import RxCocoa
 
+enum TextFieldType {
+    case email
+    case password
+    
+    var placeholder: String {
+        switch self {
+        case .email:
+            return "Email"
+        case .password:
+            return "Senha"
+        }
+    }
+    
+    var isSecureTextEntryRelay: Bool {
+        switch self {
+        case .password:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 final class TextFieldViewModel {
     
     let placeholder: String
     let textRelay: BehaviorRelay<String?>
     weak var delegate: UITextFieldDelegate?
     private let error: Observable<String?>
-    private let image: UIImage?
+    private let type: TextFieldType
+    private let isSecureTextEntryRelay: BehaviorRelay<Bool>
     
-    init(placeholder: String, textRelay: BehaviorRelay<String?>, error: Observable<String?>, image: UIImage?, delegate: UITextFieldDelegate) {
-        self.placeholder = placeholder
+    init(type: TextFieldType, textRelay: BehaviorRelay<String?>, error: Observable<String?>, delegate: UITextFieldDelegate) {
+        self.type = type
+        self.placeholder = type.placeholder
         self.textRelay = textRelay
         self.error = error
-        self.image = image
         self.delegate = delegate
+        self.isSecureTextEntryRelay = BehaviorRelay(value: type.isSecureTextEntryRelay)
     }
 }
 
 // MARK: TextFieldProtocol
 extension TextFieldViewModel: TextFieldProtocol {
+    
+    var isSecureTextEntry: Driver<Bool> {
+        isSecureTextEntryRelay.asDriver(onErrorJustReturn: false)
+    }
+    
+    var keyboardType: UIKeyboardType {
+        switch type {
+        case .email:
+            return .emailAddress
+        case .password:
+            return .default
+        }
+    }
 
     var placeholderColor: Driver<UIColor> {
         .just(.gray)
@@ -43,12 +81,32 @@ extension TextFieldViewModel: TextFieldProtocol {
     }
     
     var textFieldImage: Driver<UIImage?> {
-        error.map { [weak self] in return $0 == nil ? self?.image : .errorIcon }
+        Observable.combineLatest(error, isSecureTextEntryRelay)
+            .map { [weak self] (error, isSecureTextEntry) in
+                if error != nil {
+                    return .errorIcon
+                }
+                
+                if self?.type == .password {
+                    return isSecureTextEntry ? .eyeIcon : .eyeIconOff
+                }
+                return nil
+            }
             .asDriver(onErrorJustReturn: nil)
     }
     
     var textFieldImageColor: Driver<UIColor?> {
         error.map { $0 == nil ? .gray : .red }
             .asDriver(onErrorJustReturn: .gray)
+    }
+    
+    func didTapTextFieldRightView() {
+        switch type {
+        case .password:
+            isSecureTextEntryRelay.accept(!isSecureTextEntryRelay.value)
+            
+        default:
+            break
+        }
     }
 }

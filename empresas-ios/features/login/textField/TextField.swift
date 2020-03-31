@@ -13,6 +13,8 @@ import RxCocoa
 protocol TextFieldProtocol {
     
     var placeholder: String { get }
+    var keyboardType: UIKeyboardType { get }
+    var isSecureTextEntry: Driver<Bool> { get }
     var delegate: UITextFieldDelegate? { get }
     var textRelay: BehaviorRelay<String?> { get }
     var placeholderColor: Driver<UIColor> { get }
@@ -20,6 +22,8 @@ protocol TextFieldProtocol {
     var textFieldBorderColor: Driver<UIColor> { get }
     var textFieldImage: Driver<UIImage?> { get }
     var textFieldImageColor: Driver<UIColor?> { get }
+    
+    func didTapTextFieldRightView()
 }
 
 final class TextField: UIView {
@@ -51,17 +55,28 @@ final class TextField: UIView {
     }()
     
     private let disposeBag = DisposeBag()
+    private let viewModel: TextFieldProtocol
     
     init(viewModel: TextFieldProtocol) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setupConstraints()
-        textField.setPadding()
         
+        textField.setPadding()
+        bind()
+    }
+    
+    private func bind() {
+        textField.keyboardType = viewModel.keyboardType
         placeholderLabel.text = viewModel.placeholder
         
         if let delegate = viewModel.delegate {
             textField.delegate = delegate
         }
+        
+        viewModel.isSecureTextEntry
+            .drive(textField.rx.isSecureTextEntry)
+            .disposed(by: disposeBag)
         
         textField.rx.text
             .bind(twoWay: viewModel.textRelay)
@@ -85,7 +100,9 @@ final class TextField: UIView {
         
         Driver.combineLatest(viewModel.textFieldImage, viewModel.textFieldImageColor)
             .drive(onNext: { [weak self] (image, color) in
-                self?.textField.setRightView(image: image, color: color)
+                self?.textField.setRightView(image: image, color: color) { [weak self] in
+                    self?.viewModel.didTapTextFieldRightView()
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -27,13 +27,13 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var welcomeLabel: UILabel!
     
     private lazy var emailTextField: TextField = {
-        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Email", textRelay: viewModel.emailRelay, error: viewModel.emailError, image: nil, delegate: self))
+        let textField = TextField(viewModel: TextFieldViewModel(type: .email, textRelay: viewModel.emailRelay, error: viewModel.emailError, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
     private lazy var passwordTextField: TextField = {
-        let textField = TextField(viewModel: TextFieldViewModel(placeholder: "Senha", textRelay: viewModel.passwordRelay, error: viewModel.passwordError, image: .eyeIcon, delegate: self))
+        let textField = TextField(viewModel: TextFieldViewModel(type: .password, textRelay: viewModel.passwordRelay, error: viewModel.passwordError, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
