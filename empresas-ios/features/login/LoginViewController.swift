@@ -77,6 +77,7 @@ final class LoginViewController: UIViewController {
     private func bind() {
         
         loginButton.rx.tap
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind { [weak self] in
                 self?.viewModel.didTapLoginButton()
             }

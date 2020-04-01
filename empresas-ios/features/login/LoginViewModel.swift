@@ -46,7 +46,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     
     func didTapLoginButton() {
         canShowErrorSubject.onNext(true)
-        guard let email = emailRelay.value, let password = passwordRelay.value else { return }
+        guard let email = emailRelay.value, let password = passwordRelay.value, !email.isEmpty, !password.isEmpty else { return }
         
         let loginRequest = LoginRequest(email: email, password: password)
         
