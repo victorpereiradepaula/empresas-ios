@@ -20,15 +20,15 @@ protocol EnterpriseSearchViewModelProtocol {
 
 final class EnterpriseSearchViewController: UIViewController {
     
-    @IBOutlet weak var headerImageViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var resultsFoundLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     private lazy var messageLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel(frame: tableView.bounds)
         label.font = .rubikLight(size: 18)
+        label.textAlignment = .center
         label.textColor = .gray
         return label
     }()
@@ -71,16 +71,16 @@ final class EnterpriseSearchViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        tableView.endEditing(true)
+    }
+    
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.register(EnterpriseTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.tableFooterView = messageLabel
-        tableView.addConstraints([
-            messageLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-            messageLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
-        ])
     }
     
     private func applyLayout() {
@@ -114,8 +114,8 @@ final class EnterpriseSearchViewController: UIViewController {
             .disposed(by: disposeBag)
         
         searchBar.rx.text
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .debug()
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.searchTextSubject)
             .disposed(by: disposeBag)
     }
@@ -138,6 +138,10 @@ extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDele
         let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel())
         navigationController?.pushViewController(enterpriseDetailsViewController, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        messageLabel
+    }
 }
 
 // MARK: UITextFieldDelegate
@@ -145,13 +149,13 @@ extension EnterpriseSearchViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.headerImageViewConstraint.constant = 150
+            self?.headerViewHeightConstraint.constant = 150
         })
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.headerImageViewConstraint.constant = 250
+            self?.headerViewHeightConstraint.constant = 250
         })
     }
 }

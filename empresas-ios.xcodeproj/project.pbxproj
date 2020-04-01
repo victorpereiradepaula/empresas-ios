@@ -46,7 +46,7 @@
 		8DC7285D24342F1600176FBD /* EnterprisesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */; };
 		8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */; };
 		8DC7286A2434474200176FBD /* EnterpriseDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728692434474200176FBD /* EnterpriseDetailsViewModel.swift */; };
-		8DC7286E243510E600176FBD /* CodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7286D243510E600176FBD /* CodableModel.swift */; };
+		8DC7286E243510E600176FBD /* CodableModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7286D243510E600176FBD /* CodableModelProtocol.swift */; };
 		95891ED6B2DD070C0DC6BB2C /* Pods_empresas_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E1ABBE0F03BCD5305C79F1 /* Pods_empresas_iosTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,7 +107,7 @@
 		8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterprisesRequest.swift; sourceTree = "<group>"; };
 		8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseDetailsViewController.swift; sourceTree = "<group>"; };
 		8DC728692434474200176FBD /* EnterpriseDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseDetailsViewModel.swift; sourceTree = "<group>"; };
-		8DC7286D243510E600176FBD /* CodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableModel.swift; sourceTree = "<group>"; };
+		8DC7286D243510E600176FBD /* CodableModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableModelProtocol.swift; sourceTree = "<group>"; };
 		D2BF8A4F938A093A03229BE0 /* Pods-empresas-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-iosTests.release.xcconfig"; path = "Target Support Files/Pods-empresas-iosTests/Pods-empresas-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		E356FC47F7B6ECC18AFB2B4F /* Pods_empresas_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_empresas_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -189,13 +189,13 @@
 		8DC727EE2432B07900176FBD /* models */ = {
 			isa = PBXGroup;
 			children = (
+				8DC7286D243510E600176FBD /* CodableModelProtocol.swift */,
 				8DC7283E24341A4600176FBD /* UserSession.swift */,
 				8DC727F72432B24C00176FBD /* User.swift */,
 				8DC727F52432B21800176FBD /* Investor.swift */,
 				8DC727F32432B1D900176FBD /* Portfolio.swift */,
 				8DC727EF2432B17100176FBD /* Enterprise.swift */,
 				8DC727F12432B19700176FBD /* EnterpriseType.swift */,
-				8DC7286D243510E600176FBD /* CodableModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 				8DC727F62432B21800176FBD /* Investor.swift in Sources */,
 				8DC7283D243419BD00176FBD /* UserDefaults.swift in Sources */,
 				8DC7285324342BB000176FBD /* SearchViewModel.swift in Sources */,
-				8DC7286E243510E600176FBD /* CodableModel.swift in Sources */,
+				8DC7286E243510E600176FBD /* CodableModelProtocol.swift in Sources */,
 				8DC7283724340CF800176FBD /* APIRequest.swift in Sources */,
 				8DC728282433983E00176FBD /* TextFieldExtension.swift in Sources */,
 				8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */,

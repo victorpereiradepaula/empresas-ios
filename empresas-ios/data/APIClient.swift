@@ -19,7 +19,7 @@ final class APIClient {
         return jsonDecoder
     }()
     
-    func send<T: CodableModel>(apiRequest: APIRequest) -> Observable<T> {
+    func send<T: CodableModelProtocol>(apiRequest: APIRequest) -> Observable<T> {
         return Observable<T>.create { observer in
             let request = apiRequest.request(with: self.baseURL)
             print(request)

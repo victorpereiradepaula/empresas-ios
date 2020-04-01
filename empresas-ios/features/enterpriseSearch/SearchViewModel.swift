@@ -16,21 +16,23 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     
     var enterprises: Driver<[Enterprise]> {
         searchTextSubject
-        .debug()
-            .flatMap { (text) -> Observable<EnterprisesRequest> in
+            .debug()
+            .distinctUntilChanged()
+            .flatMapLatest { (text) -> Observable<EnterprisesRequest> in
                 guard let text = text, !text.isEmpty else { return .never() }
                 return .just(EnterprisesRequest(name: text))
             }
-            .flatMap { request -> Observable<[Enterprise]> in
-                print(request)
-                let enterpriseArray: Observable<EnterpriseArray> = self.apiClient.send(apiRequest: request)
-                return enterpriseArray.map { $0.enterprises }
+            .flatMapLatest { [weak self] request -> Observable<EnterpriseArray> in
+                guard let self = self else { return .never() }
+                return self.apiClient.send(apiRequest: request)
             }
+            .map { $0.enterprises }
             .asDriver(onErrorJustReturn: [])
     }
     
     var searchMessage: Driver<String?> {
         enterprises.map { return $0.isEmpty ? "Nenhum resultado encontrado" : nil }
+        .asDriver(onErrorJustReturn: nil)
     }
     
     var resultsFoundMessage: Driver<String?> {

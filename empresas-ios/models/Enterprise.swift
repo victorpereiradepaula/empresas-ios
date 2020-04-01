@@ -6,14 +6,16 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
-final class EnterpriseArray: CodableModel {
+struct EnterpriseArray: CodableModelProtocol {
     
-    var enterprises: [Enterprise] = []
+    let enterprises: [Enterprise]
+    let errors: [String]?
 }
 
-final class EnterpriseDetails: CodableModel {
+struct EnterpriseDetails: CodableModelProtocol {
     
     var enterprise: Enterprise?
+    let errors: [String]?
 }
 
 struct Enterprise: Codable {

@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EnterpriseSearchViewController" customModule="empresas_ios" customModuleProvider="target">
             <connections>
-                <outlet property="headerImageViewConstraint" destination="yaG-DB-RLp" id="0dg-Ov-eUa"/>
+                <outlet property="headerViewHeightConstraint" destination="3XE-1R-OW3" id="FjD-Va-pG7"/>
                 <outlet property="resultsFoundLabel" destination="hxz-NX-ybQ" id="bCr-gs-ABs"/>
                 <outlet property="searchBar" destination="doU-FO-YXh" id="pBB-CS-IQf"/>
                 <outlet property="tableView" destination="YzZ-53-lDp" id="Fo4-7h-8EM"/>
@@ -22,40 +22,50 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YzZ-53-lDp">
-                    <rect key="frame" x="0.0" y="327" width="414" height="569"/>
+                    <rect key="frame" x="0.0" y="287" width="414" height="609"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxz-NX-ybQ">
-                    <rect key="frame" x="16" y="290" width="382" height="21"/>
+                    <rect key="frame" x="16" y="250" width="382" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lauch_screen_background" translatesAutoresizingMaskIntoConstraints="NO" id="eBi-po-pDR">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ken-mb-7h3">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lauch_screen_background" translatesAutoresizingMaskIntoConstraints="NO" id="eBi-po-pDR">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
+                        </imageView>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="doU-FO-YXh">
+                            <rect key="frame" x="16" y="186" width="382" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="S7y-lD-ZVW"/>
+                            </constraints>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="250" id="yaG-DB-RLp"/>
+                        <constraint firstItem="doU-FO-YXh" firstAttribute="top" secondItem="eBi-po-pDR" secondAttribute="bottom" constant="-24" id="0B2-Az-8YV"/>
+                        <constraint firstAttribute="bottom" secondItem="doU-FO-YXh" secondAttribute="bottom" constant="16" id="1Pz-Sd-DVa"/>
+                        <constraint firstAttribute="height" constant="250" id="3XE-1R-OW3"/>
+                        <constraint firstItem="eBi-po-pDR" firstAttribute="leading" secondItem="Ken-mb-7h3" secondAttribute="leading" id="KYa-Av-WTN"/>
+                        <constraint firstAttribute="trailing" secondItem="eBi-po-pDR" secondAttribute="trailing" id="R9J-7Z-P6O"/>
+                        <constraint firstItem="doU-FO-YXh" firstAttribute="leading" secondItem="Ken-mb-7h3" secondAttribute="leading" constant="16" id="TgM-xn-Vtk"/>
+                        <constraint firstAttribute="trailing" secondItem="doU-FO-YXh" secondAttribute="trailing" constant="16" id="dob-Ug-OF2"/>
+                        <constraint firstItem="eBi-po-pDR" firstAttribute="top" secondItem="Ken-mb-7h3" secondAttribute="top" id="ivM-u5-6p9"/>
                     </constraints>
-                </imageView>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="doU-FO-YXh">
-                    <rect key="frame" x="16" y="226" width="382" height="48"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="S7y-lD-ZVW"/>
-                    </constraints>
-                    <textInputTraits key="textInputTraits"/>
-                </searchBar>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="eBi-po-pDR" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="1H4-j4-yJQ"/>
-                <constraint firstItem="eBi-po-pDR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3CI-w9-EDi"/>
-                <constraint firstItem="doU-FO-YXh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="FcH-ce-C6w"/>
+                <constraint firstAttribute="trailing" secondItem="Ken-mb-7h3" secondAttribute="trailing" id="B43-IK-K5h"/>
+                <constraint firstItem="Ken-mb-7h3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OWg-6H-K0X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hxz-NX-ybQ" secondAttribute="trailing" constant="16" id="PFc-dN-7HD"/>
-                <constraint firstItem="eBi-po-pDR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PSD-vn-XDI"/>
-                <constraint firstItem="doU-FO-YXh" firstAttribute="top" secondItem="eBi-po-pDR" secondAttribute="bottom" constant="-24" id="Wgm-56-NuN"/>
-                <constraint firstItem="doU-FO-YXh" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-16" id="exE-Md-rdu"/>
+                <constraint firstItem="hxz-NX-ybQ" firstAttribute="top" secondItem="Ken-mb-7h3" secondAttribute="bottom" id="QLJ-yM-Cjg"/>
                 <constraint firstAttribute="bottom" secondItem="YzZ-53-lDp" secondAttribute="bottom" id="jxd-sq-LL4"/>
-                <constraint firstItem="hxz-NX-ybQ" firstAttribute="top" secondItem="doU-FO-YXh" secondAttribute="bottom" constant="16" id="oSD-SI-xbE"/>
+                <constraint firstItem="Ken-mb-7h3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="r3n-98-a7E"/>
                 <constraint firstItem="YzZ-53-lDp" firstAttribute="top" secondItem="hxz-NX-ybQ" secondAttribute="bottom" constant="16" id="v7i-LD-oxS"/>
                 <constraint firstItem="YzZ-53-lDp" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vEM-8l-BFx"/>
                 <constraint firstItem="hxz-NX-ybQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="xwP-qm-x8A"/>

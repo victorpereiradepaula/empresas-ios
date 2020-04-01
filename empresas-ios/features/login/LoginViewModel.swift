@@ -53,13 +53,12 @@ final class LoginViewModel: LoginViewModelProtocol {
         
         let loginRequest = LoginRequest(email: email, password: password)
         
-        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onNext: { (user) in
-            print(user)
-        }, onError: { [weak self] (error) in
+        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onError: { [weak self] (error) in
             self?.apiErrorSubject.onNext(error.localizedDescription)
         })
         
-        requestObservable.subscribe()
+        requestObservable
+            .subscribe()
             .disposed(by: disposeBag)
     }
 }
