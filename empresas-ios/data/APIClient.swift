@@ -12,7 +12,7 @@ import Foundation
 final class APIClient {
     
     private let baseURL = URL(string: "https://empresas.ioasys.com.br/api/v1")!
-
+    
     private lazy var jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -26,9 +26,12 @@ final class APIClient {
                 
                 do {
                     let model: T = try self.jsonDecoder.decode(T.self, from: data ?? Data())
-                    
-                    if model is User, let response = response {
-                        self.updateSession(response: response)
+                    if let response = response as? HTTPURLResponse {
+                        if model is User {
+                            self.updateSession(response: response)
+                        } else if response.statusCode == 401 {
+                            SessionManager.shared.removeSession()
+                        }
                     }
                     
                     observer.onNext(model)
@@ -38,20 +41,18 @@ final class APIClient {
                 observer.onCompleted()
             }
             task.resume()
-
+            
             return Disposables.create {
                 task.cancel()
             }
         }
     }
     
-    private func updateSession(response: URLResponse) {
-        if let httpResponse = response as? HTTPURLResponse {
-            let allHeaderFields = httpResponse.allHeaderFields
-            
-            if let client = allHeaderFields["client"] as? String, let accessToken = allHeaderFields["access-token"] as? String, let uid = allHeaderFields["uid"] as? String {
-                SessionManager.shared.updateSession(UserSession(client: client, accessToken: accessToken, uid: uid))
-            }
+    private func updateSession(response: HTTPURLResponse) {
+        let allHeaderFields = response.allHeaderFields
+        
+        if let client = allHeaderFields["client"] as? String, let accessToken = allHeaderFields["access-token"] as? String, let uid = allHeaderFields["uid"] as? String {
+            SessionManager.shared.updateSession(UserSession(client: client, accessToken: accessToken, uid: uid))
         }
     }
 }
