@@ -17,34 +17,37 @@ final class LoginViewModel: LoginViewModelProtocol {
     private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
     private let canShowErrorSubject = BehaviorSubject<Bool>(value: false)
-    private let apiErrorRelay = BehaviorSubject<String?>(value: nil)
+    private let apiErrorSubject = BehaviorSubject<String?>(value: nil)
     
     var emailError: Observable<String?> {
-        Observable.combineLatest(emailRelay, canShowErrorSubject)
-            .map { (email, canShow) in
+        Observable.combineLatest(emailRelay, apiErrorSubject, canShowErrorSubject)
+            .map { (email, apiError, canShow) in
                 guard canShow else { return nil }
                 
-                if let email = email, !email.isEmpty {
+                if apiError != nil {
+                    return ""
+                } else if let email = email, !email.isEmpty {
                     return nil
                 }
                 return "Informe o email"
-            }
+        }
     }
     var passwordError: Observable<String?> {
-        Observable.combineLatest(passwordRelay, apiErrorRelay, canShowErrorSubject)
+        Observable.combineLatest(passwordRelay, apiErrorSubject, canShowErrorSubject)
             .map { (password, apiError, canShow) in
                 guard canShow else { return nil }
                 
-                if let password = password, !password.isEmpty {
-                    return nil
-                } else if let apiError = apiError {
+                if let apiError = apiError {
                     return apiError
+                } else if let password = password, !password.isEmpty {
+                    return nil
                 }
                 return "Informe a senha"
         }
     }
     
     func didTapLoginButton() {
+        apiErrorSubject.onNext(nil)
         canShowErrorSubject.onNext(true)
         guard let email = emailRelay.value, let password = passwordRelay.value, !email.isEmpty, !password.isEmpty else { return }
         
@@ -52,11 +55,11 @@ final class LoginViewModel: LoginViewModelProtocol {
         
         let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onNext: { (user) in
             print(user)
-        }, onError: { (error) in
-            print(error.localizedDescription)
-            })
+        }, onError: { [weak self] (error) in
+            self?.apiErrorSubject.onNext(error.localizedDescription)
+        })
         
         requestObservable.subscribe()
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 }

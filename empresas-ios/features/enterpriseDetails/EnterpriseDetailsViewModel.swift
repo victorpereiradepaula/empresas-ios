@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class EnterpriseDetailsViewModel {
+final class EnterpriseDetailsViewModel: EnterpriseDetailsViewModelProtocol {
     
 }

@@ -26,7 +26,7 @@ final class AppRouter {
         case .unauthenticated:
             rootViewController = LoginViewController(viewModel: LoginViewModel())
         case .loggedIn:
-            let navigationController = UINavigationController(rootViewController: EnterpriseSearchViewController())
+            let navigationController = UINavigationController(rootViewController: EnterpriseSearchViewController(viewModel: EnterpriseSearchViewModel()))
             rootViewController = navigationController
         }
 

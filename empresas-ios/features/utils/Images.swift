@@ -15,4 +15,6 @@ extension UIImage {
     static let eyeIcon = UIImage(named: "ic_eye")!.withRenderingMode(.alwaysTemplate)
         
     static let eyeIconOff = UIImage(named: "ic_eye_off")!.withRenderingMode(.alwaysTemplate)
+    
+    static let backIcon = UIImage(named: "ic_back")!.withRenderingMode(.alwaysTemplate)
 }

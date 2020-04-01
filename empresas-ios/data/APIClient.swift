@@ -19,9 +19,10 @@ final class APIClient {
         return jsonDecoder
     }()
     
-    func send<T: Codable>(apiRequest: APIRequest) -> Observable<T> {
+    func send<T: CodableModel>(apiRequest: APIRequest) -> Observable<T> {
         return Observable<T>.create { observer in
             let request = apiRequest.request(with: self.baseURL)
+            print(request)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 
                 do {
@@ -34,7 +35,11 @@ final class APIClient {
                         }
                     }
                     
-                    observer.onNext(model)
+                    if let errors = model.errors {
+                        observer.onError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: errors.joined(separator: ", ")]))
+                    } else {
+                        observer.onNext(model)
+                    }
                 } catch let error {
                     observer.onError(error)
                 }

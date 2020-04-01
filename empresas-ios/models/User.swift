@@ -6,8 +6,8 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
-struct User: Codable {
+final class User: CodableModel {
     
-    let investor: Investor
-    let enterprise: Enterprise?
+    var investor: Investor?
+    var enterprise: Enterprise?
 }
