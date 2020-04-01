@@ -8,13 +8,11 @@
 
 struct LoginRequest: APIRequest {
     
-    var method: RequestType
-    var path: String
+    var method: RequestType = .POST
+    var path: String = "users/auth/sign_in"
     var parameters: [String: String]
 
     init(email: String, password: String) {
-        method = .POST
-        path = "users/auth/sign_in"
         parameters = [
             "email": email,
             "password": password

@@ -39,6 +39,13 @@
 		8DC7283F24341A4600176FBD /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7283E24341A4600176FBD /* UserSession.swift */; };
 		8DC7284124341C1400176FBD /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7284024341C1400176FBD /* SessionManager.swift */; };
 		8DC7284D243424BF00176FBD /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7284C243424BF00176FBD /* AppRouter.swift */; };
+		8DC7285324342BB000176FBD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285224342BB000176FBD /* SearchViewModel.swift */; };
+		8DC7285524342D7600176FBD /* EnterpriseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */; };
+		8DC7285924342DCA00176FBD /* EnterpriseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */; };
+		8DC7285D24342F1600176FBD /* EnterprisesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */; };
+		8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */; };
+		8DC728682434470F00176FBD /* EnterpriseDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DC728662434470F00176FBD /* EnterpriseDetailsViewController.xib */; };
+		8DC7286A2434474200176FBD /* EnterpriseDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728692434474200176FBD /* EnterpriseDetailsViewModel.swift */; };
 		95891ED6B2DD070C0DC6BB2C /* Pods_empresas_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E1ABBE0F03BCD5305C79F1 /* Pods_empresas_iosTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +99,13 @@
 		8DC7283E24341A4600176FBD /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		8DC7284024341C1400176FBD /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		8DC7284C243424BF00176FBD /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		8DC7285224342BB000176FBD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSearchViewController.swift; sourceTree = "<group>"; };
+		8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseTableViewCell.swift; sourceTree = "<group>"; };
+		8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterprisesRequest.swift; sourceTree = "<group>"; };
+		8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseDetailsViewController.swift; sourceTree = "<group>"; };
+		8DC728662434470F00176FBD /* EnterpriseDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterpriseDetailsViewController.xib; sourceTree = "<group>"; };
+		8DC728692434474200176FBD /* EnterpriseDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseDetailsViewModel.swift; sourceTree = "<group>"; };
 		D2BF8A4F938A093A03229BE0 /* Pods-empresas-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-iosTests.release.xcconfig"; path = "Target Support Files/Pods-empresas-iosTests/Pods-empresas-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		E356FC47F7B6ECC18AFB2B4F /* Pods_empresas_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_empresas_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -194,11 +208,14 @@
 			path = login;
 			sourceTree = "<group>";
 		};
-		8DC727FE2432B48300176FBD /* search */ = {
+		8DC727FE2432B48300176FBD /* enterpriseSearch */ = {
 			isa = PBXGroup;
 			children = (
+				8DC7285624342D9300176FBD /* enterpriseCell */,
+				8DC7285224342BB000176FBD /* SearchViewModel.swift */,
+				8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */,
 			);
-			path = search;
+			path = enterpriseSearch;
 			sourceTree = "<group>";
 		};
 		8DC727FF2432C10A00176FBD /* features */ = {
@@ -206,7 +223,8 @@
 			children = (
 				8DC728202433558C00176FBD /* utils */,
 				8DC727F92432B39400176FBD /* login */,
-				8DC727FE2432B48300176FBD /* search */,
+				8DC727FE2432B48300176FBD /* enterpriseSearch */,
+				8DC72864243446E700176FBD /* enterpriseDetails */,
 			);
 			path = features;
 			sourceTree = "<group>";
@@ -228,6 +246,7 @@
 				8DC7284024341C1400176FBD /* SessionManager.swift */,
 				8DC7283624340CF800176FBD /* APIRequest.swift */,
 				8DC7283824340DD200176FBD /* LoginRequest.swift */,
+				8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -272,6 +291,24 @@
 				8DC7283C243419BD00176FBD /* UserDefaults.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		8DC7285624342D9300176FBD /* enterpriseCell */ = {
+			isa = PBXGroup;
+			children = (
+				8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */,
+			);
+			path = enterpriseCell;
+			sourceTree = "<group>";
+		};
+		8DC72864243446E700176FBD /* enterpriseDetails */ = {
+			isa = PBXGroup;
+			children = (
+				8DC728692434474200176FBD /* EnterpriseDetailsViewModel.swift */,
+				8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */,
+				8DC728662434470F00176FBD /* EnterpriseDetailsViewController.xib */,
+			);
+			path = enterpriseDetails;
 			sourceTree = "<group>";
 		};
 		FFA2C5D42756301D6C7B5FAE /* Frameworks */ = {
@@ -371,6 +408,7 @@
 			files = (
 				8DC727D92432A87500176FBD /* LaunchScreen.storyboard in Resources */,
 				8DC728102432CA7E00176FBD /* Rubik-Regular.ttf in Resources */,
+				8DC728682434470F00176FBD /* EnterpriseDetailsViewController.xib in Resources */,
 				8DC7280C2432CA6E00176FBD /* Rubik-Light.ttf in Resources */,
 				8DC727D62432A87500176FBD /* Assets.xcassets in Resources */,
 				8DC727FD2432B3B600176FBD /* LoginViewController.xib in Resources */,
@@ -502,16 +540,22 @@
 				8DC7283B24340EA200176FBD /* APIClient.swift in Sources */,
 				8DC727F02432B17100176FBD /* Enterprise.swift in Sources */,
 				8DC7284D243424BF00176FBD /* AppRouter.swift in Sources */,
+				8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */,
+				8DC7285924342DCA00176FBD /* EnterpriseTableViewCell.swift in Sources */,
 				8DC727F82432B24C00176FBD /* User.swift in Sources */,
 				8DC7284124341C1400176FBD /* SessionManager.swift in Sources */,
+				8DC7286A2434474200176FBD /* EnterpriseDetailsViewModel.swift in Sources */,
 				8DC7282A2433A52300176FBD /* Images.swift in Sources */,
 				8DC7283924340DD200176FBD /* LoginRequest.swift in Sources */,
 				8DC7282C2433EAD300176FBD /* LoginViewModel.swift in Sources */,
+				8DC7285524342D7600176FBD /* EnterpriseSearchViewController.swift in Sources */,
 				8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */,
 				8DC7282624335DB600176FBD /* TextFieldViewModel.swift in Sources */,
 				8DC728242433562600176FBD /* Fonts.swift in Sources */,
+				8DC7285D24342F1600176FBD /* EnterprisesRequest.swift in Sources */,
 				8DC727F62432B21800176FBD /* Investor.swift in Sources */,
 				8DC7283D243419BD00176FBD /* UserDefaults.swift in Sources */,
+				8DC7285324342BB000176FBD /* SearchViewModel.swift in Sources */,
 				8DC7283724340CF800176FBD /* APIRequest.swift in Sources */,
 				8DC728282433983E00176FBD /* TextFieldExtension.swift in Sources */,
 				8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */,
