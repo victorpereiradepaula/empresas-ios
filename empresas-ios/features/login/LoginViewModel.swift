@@ -14,6 +14,8 @@ final class LoginViewModel: LoginViewModelProtocol {
     let emailRelay = BehaviorRelay<String?>(value: nil)
     let passwordRelay = BehaviorRelay<String?>(value: nil)
     
+    private let apiClient = APIClient()
+    private let disposeBag = DisposeBag()
     private let canShowErrorSubject = BehaviorSubject<Bool>(value: false)
     private let apiErrorRelay = BehaviorSubject<String?>(value: nil)
     
@@ -46,6 +48,15 @@ final class LoginViewModel: LoginViewModelProtocol {
         canShowErrorSubject.onNext(true)
         guard let email = emailRelay.value, let password = passwordRelay.value else { return }
         
-        print("DidTap: \(email) - \(password)")
+        let loginRequest = LoginRequest(email: email, password: password)
+        
+        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onNext: { (user) in
+            print(user)
+        }, onError: { (error) in
+            print(error.localizedDescription)
+            })
+        
+        requestObservable.subscribe()
+        .disposed(by: disposeBag)
     }
 }

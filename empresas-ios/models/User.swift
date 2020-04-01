@@ -9,5 +9,5 @@
 struct User: Codable {
     
     let investor: Investor
-    let enterprise: Enterprise
+    let enterprise: Enterprise?
 }

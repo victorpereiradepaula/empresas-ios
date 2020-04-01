@@ -10,8 +10,7 @@ import RxSwift
 import RxCocoa
 
 enum TextFieldType {
-    case email
-    case password
+    case email, password
     
     var placeholder: String {
         switch self {
