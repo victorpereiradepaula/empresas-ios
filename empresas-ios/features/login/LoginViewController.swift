@@ -35,6 +35,7 @@ final class LoginViewController: UIViewController {
     private lazy var passwordTextField: TextField = {
         let textField = TextField(viewModel: TextFieldViewModel(type: .password, textRelay: viewModel.passwordRelay, error: viewModel.passwordError, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.tintColor = .gray
         return textField
     }()
     

@@ -10,4 +10,9 @@ import Foundation
 
 final class EnterpriseDetailsViewModel: EnterpriseDetailsViewModelProtocol {
     
+    private let enterprise: Enterprise
+    
+    init(enterprise: Enterprise) {
+        self.enterprise = enterprise
+    }
 }

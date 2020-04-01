@@ -12,9 +12,15 @@ final class EnterpriseTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        applyLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func applyLayout() {
+        backgroundColor = .white
+        textLabel?.textColor = .black
     }
 }

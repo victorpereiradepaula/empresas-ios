@@ -85,11 +85,15 @@ final class EnterpriseSearchViewController: UIViewController {
     
     private func applyLayout() {
         view.backgroundColor = .white
+        tableView.backgroundColor = .white
         
-        searchBar.backgroundColor = .backgroundGray
         searchBar.searchTextField.backgroundColor = .backgroundGray
         searchBar.searchTextField.font = .rubikLight(size: 18)
         searchBar.searchTextField.textColor = .gray
+        searchBar.searchTextField.leftView?.tintColor = .gray
+        searchBar.barTintColor = .backgroundGray
+        searchBar.layer.cornerRadius = 4
+        searchBar.layer.masksToBounds = true
         
         resultsFoundLabel.font = .rubikLight(size: 14)
         resultsFoundLabel.textColor = .gray
@@ -115,7 +119,7 @@ final class EnterpriseSearchViewController: UIViewController {
         
         searchBar.rx.text
             .debug()
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.searchTextSubject)
             .disposed(by: disposeBag)
     }
@@ -135,7 +139,7 @@ extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel())
+        let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel(enterprise: enterprises[indexPath.row]))
         navigationController?.pushViewController(enterpriseDetailsViewController, animated: true)
     }
     
