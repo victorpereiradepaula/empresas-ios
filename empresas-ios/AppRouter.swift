@@ -26,8 +26,7 @@ final class AppRouter {
         case .unauthenticated:
             rootViewController = LoginViewController(viewModel: LoginViewModel())
         case .loggedIn:
-            let navigationController = UINavigationController(rootViewController: EnterpriseSearchViewController(viewModel: EnterpriseSearchViewModel()))
-            rootViewController = navigationController
+            rootViewController = createNavigationController(rootViewController: EnterpriseSearchViewController(viewModel: EnterpriseSearchViewModel()))
         }
 
         window.rootViewController = rootViewController
@@ -41,5 +40,16 @@ final class AppRouter {
                 self.setRootWith(state: state)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func createNavigationController(rootViewController: UIViewController) -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        let navigationBar = navigationController.navigationBar
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.isTranslucent = true
+        navigationBar.tintColor = .primary
+        
+        return navigationController
     }
 }

@@ -10,14 +10,19 @@ import RxSwift
 import RxCocoa
 
 final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
-        
+    
     private let apiClient = APIClient()
-    let searchTextSubject = PublishSubject<String>()
+    let searchTextSubject = PublishSubject<String?>()
     
     var enterprises: Driver<[Enterprise]> {
         searchTextSubject
-            .map { EnterprisesRequest(name: $0) }
+        .debug()
+            .flatMap { (text) -> Observable<EnterprisesRequest> in
+                guard let text = text, !text.isEmpty else { return .never() }
+                return .just(EnterprisesRequest(name: text))
+            }
             .flatMap { request -> Observable<[Enterprise]> in
+                print(request)
                 let enterpriseArray: Observable<EnterpriseArray> = self.apiClient.send(apiRequest: request)
                 return enterpriseArray.map { $0.enterprises }
             }
@@ -26,5 +31,16 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     
     var searchMessage: Driver<String?> {
         enterprises.map { return $0.isEmpty ? "Nenhum resultado encontrado" : nil }
+    }
+    
+    var resultsFoundMessage: Driver<String?> {
+        enterprises.map { (results) in
+            guard !results.isEmpty else { return nil }
+            let count = results.count
+            if count == 1 {
+                return "01 resultado encontrado"
+            }
+            return String(format: "%02d resultados encontrados", count)
+        }
     }
 }

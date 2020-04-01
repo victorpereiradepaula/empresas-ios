@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4627F9DC57E078936ED00055 /* Pods_empresas_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E356FC47F7B6ECC18AFB2B4F /* Pods_empresas_ios.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		8D39DFEE2435274000C7441C /* EnterpriseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */; };
+		8D39DFEF2435274000C7441C /* EnterpriseSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */; };
 		8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CC2432A87000176FBD /* AppDelegate.swift */; };
 		8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CE2432A87000176FBD /* SceneDelegate.swift */; };
 		8DC727D62432A87500176FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DC727D52432A87500176FBD /* Assets.xcassets */; };
@@ -40,7 +42,6 @@
 		8DC7284124341C1400176FBD /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7284024341C1400176FBD /* SessionManager.swift */; };
 		8DC7284D243424BF00176FBD /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7284C243424BF00176FBD /* AppRouter.swift */; };
 		8DC7285324342BB000176FBD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285224342BB000176FBD /* SearchViewModel.swift */; };
-		8DC7285524342D7600176FBD /* EnterpriseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */; };
 		8DC7285924342DCA00176FBD /* EnterpriseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */; };
 		8DC7285D24342F1600176FBD /* EnterprisesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */; };
 		8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */; };
@@ -64,6 +65,8 @@
 		36B96188B5FABFE3285679F3 /* Pods-empresas-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-ios.release.xcconfig"; path = "Target Support Files/Pods-empresas-ios/Pods-empresas-ios.release.xcconfig"; sourceTree = "<group>"; };
 		54E1ABBE0F03BCD5305C79F1 /* Pods_empresas_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_empresas_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CA2E479D713DF099E5B1F15 /* Pods-empresas-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-empresas-iosTests/Pods-empresas-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSearchViewController.swift; sourceTree = "<group>"; };
+		8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterpriseSearchViewController.xib; sourceTree = "<group>"; };
 		8DC727C92432A87000176FBD /* empresas-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "empresas-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC727CC2432A87000176FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC727CE2432A87000176FBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,7 +103,6 @@
 		8DC7284024341C1400176FBD /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		8DC7284C243424BF00176FBD /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		8DC7285224342BB000176FBD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSearchViewController.swift; sourceTree = "<group>"; };
 		8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseTableViewCell.swift; sourceTree = "<group>"; };
 		8DC7285C24342F1600176FBD /* EnterprisesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterprisesRequest.swift; sourceTree = "<group>"; };
 		8DC728652434470F00176FBD /* EnterpriseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseDetailsViewController.swift; sourceTree = "<group>"; };
@@ -214,7 +216,8 @@
 			children = (
 				8DC7285624342D9300176FBD /* enterpriseCell */,
 				8DC7285224342BB000176FBD /* SearchViewModel.swift */,
-				8DC7285424342D7600176FBD /* EnterpriseSearchViewController.swift */,
+				8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */,
+				8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */,
 			);
 			path = enterpriseSearch;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				8DC7280C2432CA6E00176FBD /* Rubik-Light.ttf in Resources */,
 				8DC727D62432A87500176FBD /* Assets.xcassets in Resources */,
 				8DC727FD2432B3B600176FBD /* LoginViewController.xib in Resources */,
+				8D39DFEF2435274000C7441C /* EnterpriseSearchViewController.xib in Resources */,
 				8DC7280A2432CA6400176FBD /* Rubik-Bold.ttf in Resources */,
 				8DC7280E2432CA7600176FBD /* Rubik-Medium.ttf in Resources */,
 			);
@@ -546,8 +550,8 @@
 				8DC7286A2434474200176FBD /* EnterpriseDetailsViewModel.swift in Sources */,
 				8DC7282A2433A52300176FBD /* Images.swift in Sources */,
 				8DC7283924340DD200176FBD /* LoginRequest.swift in Sources */,
+				8D39DFEE2435274000C7441C /* EnterpriseSearchViewController.swift in Sources */,
 				8DC7282C2433EAD300176FBD /* LoginViewModel.swift in Sources */,
-				8DC7285524342D7600176FBD /* EnterpriseSearchViewController.swift in Sources */,
 				8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */,
 				8DC7282624335DB600176FBD /* TextFieldViewModel.swift in Sources */,
 				8DC728242433562600176FBD /* Fonts.swift in Sources */,

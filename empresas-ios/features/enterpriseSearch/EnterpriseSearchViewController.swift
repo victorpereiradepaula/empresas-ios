@@ -2,7 +2,7 @@
 //  EnterpriseSearchViewController.swift
 //  empresas-ios
 //
-//  Created by Victor Pereira on 31/03/20.
+//  Created by Victor Pereira on 01/04/20.
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
@@ -13,20 +13,17 @@ import RxCocoa
 protocol EnterpriseSearchViewModelProtocol {
     
     var enterprises: Driver<[Enterprise]> { get }
-    var searchTextSubject: PublishSubject<String> { get }
+    var searchTextSubject: PublishSubject<String?> { get }
     var searchMessage: Driver<String?> { get }
+    var resultsFoundMessage: Driver<String?> { get }
 }
 
-final class EnterpriseSearchViewController: UITableViewController {
+final class EnterpriseSearchViewController: UIViewController {
     
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.backgroundColor = .clear
-        searchController.searchBar.showsCancelButton = false
-        searchController.searchBar.placeholder = "Pesquise por empresa"
-        searchController.searchBar.searchTextField.backgroundColor = .white
-        return searchController
-    }()
+    @IBOutlet weak var headerImageViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var resultsFoundLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
@@ -50,41 +47,60 @@ final class EnterpriseSearchViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    #if DEBUG
+    deinit {
+        print(self.description)
+    }
+    #endif
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.searchTextField.delegate = self
         setupTableView()
+        applyLayout()
         bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        applyLayout()
+        navigationController?.navigationBar.isHidden = true
     }
     
-    private func applyLayout() {
-        if let navigationBar = navigationController?.navigationBar {
-            navigationBar.setBackgroundImage(UIImage(named: "lauch_screen_background")!, for: .default)
-            navigationBar.shadowImage = UIImage()
-            navigationBar.isTranslucent = false
-            navigationBar.tintColor = .primary
-            navigationBar.backgroundColor = UIColor(patternImage: UIImage(named: "lauch_screen_background")!)
-        }
-        
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         tableView.register(EnterpriseTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.tableFooterView = messageLabel
-        
         tableView.addConstraints([
             messageLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
             messageLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
         ])
     }
     
+    private func applyLayout() {
+        view.backgroundColor = .white
+        
+        searchBar.backgroundColor = .backgroundGray
+        searchBar.searchTextField.backgroundColor = .backgroundGray
+        searchBar.searchTextField.font = .rubikLight(size: 18)
+        searchBar.searchTextField.textColor = .gray
+        
+        resultsFoundLabel.font = .rubikLight(size: 14)
+        resultsFoundLabel.textColor = .gray
+        resultsFoundLabel.text = nil
+    }
+    
     private func bind() {
+        
+        viewModel.resultsFoundMessage
+            .drive(resultsFoundLabel.rx.text)
+            .disposed(by: disposeBag)
         
         viewModel.searchMessage
             .drive(messageLabel.rx.text)
@@ -97,31 +113,45 @@ final class EnterpriseSearchViewController: UITableViewController {
             })
             .disposed(by: disposeBag)
         
-        searchController.searchBar.rx.text
+        searchBar.rx.text
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind { [weak self] (text) in
-                guard let text = text, !text.isEmpty else { return }
-                self?.viewModel.searchTextSubject.onNext(text)
-        }
-        .disposed(by: disposeBag)
+            .debug()
+            .bind(to: viewModel.searchTextSubject)
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: UITableViewDataSource, UITableViewDelegate
-extension EnterpriseSearchViewController {
+extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         enterprises.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
         cell.textLabel?.text = enterprises[indexPath.row].enterpriseName
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel())
         navigationController?.pushViewController(enterpriseDetailsViewController, animated: true)
+    }
+}
+
+// MARK: UITextFieldDelegate
+extension EnterpriseSearchViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.headerImageViewConstraint.constant = 150
+        })
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.headerImageViewConstraint.constant = 250
+        })
     }
 }

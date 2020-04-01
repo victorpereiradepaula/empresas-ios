@@ -13,7 +13,7 @@ protocol EnterpriseDetailsViewModelProtocol {
 }
 
 final class EnterpriseDetailsViewController: UIViewController {
-
+    
     private lazy var customBackButton = UIBarButtonItem(image: .backIcon, style: .plain, target: self, action: #selector(popViewController))
     
     private let viewModel: EnterpriseDetailsViewModelProtocol
@@ -39,11 +39,6 @@ final class EnterpriseDetailsViewController: UIViewController {
     }
     
     private func applyLayout() {
-        if let navigationBar = navigationController?.navigationBar {
-            navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationBar.backgroundColor = .white
-        }
-        
         navigationItem.leftBarButtonItem = customBackButton
         
         view.backgroundColor = .white
