@@ -12,31 +12,20 @@ import RxCocoa
 final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     
     private let apiClient = APIClient()
-    let searchTextSubject = PublishSubject<String?>()
+    let disposeBag = DisposeBag()
+    private let responseSubject = PublishSubject<[Enterprise]>()
     
     var enterprises: Driver<[Enterprise]> {
-        searchTextSubject
-            .debug()
-            .distinctUntilChanged()
-            .flatMapLatest { (text) -> Observable<EnterprisesRequest> in
-                guard let text = text, !text.isEmpty else { return .never() }
-                return .just(EnterprisesRequest(name: text))
-            }
-            .flatMapLatest { [weak self] request -> Observable<EnterpriseArray> in
-                guard let self = self else { return .never() }
-                return self.apiClient.send(apiRequest: request)
-            }
-            .map { $0.enterprises }
-            .asDriver(onErrorJustReturn: [])
+        responseSubject.asDriver(onErrorJustReturn: [])
     }
     
     var searchMessage: Driver<String?> {
-        enterprises.map { return $0.isEmpty ? "Nenhum resultado encontrado" : nil }
-        .asDriver(onErrorJustReturn: nil)
+        responseSubject.map { return $0.isEmpty ? "Nenhum resultado encontrado" : nil }
+            .asDriver(onErrorJustReturn: nil)
     }
     
     var resultsFoundMessage: Driver<String?> {
-        enterprises.map { (results) in
+        responseSubject.map { (results) in
             guard !results.isEmpty else { return nil }
             let count = results.count
             if count == 1 {
@@ -44,5 +33,18 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
             }
             return String(format: "%02d resultados encontrados", count)
         }
+        .asDriver(onErrorJustReturn: nil)
+    }
+    
+    func searchBy(text: String?) {
+        guard let text = text, !text.isEmpty else { return }
+        
+        let request = EnterprisesRequest(name: text)
+        
+        let searchRequest: Observable<EnterpriseArray> = apiClient.send(apiRequest: request)
+        searchRequest
+            .map { $0.enterprises }
+            .bind(to: responseSubject)
+            .disposed(by: disposeBag)
     }
 }

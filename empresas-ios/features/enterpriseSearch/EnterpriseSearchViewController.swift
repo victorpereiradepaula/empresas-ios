@@ -13,9 +13,10 @@ import RxCocoa
 protocol EnterpriseSearchViewModelProtocol {
     
     var enterprises: Driver<[Enterprise]> { get }
-    var searchTextSubject: PublishSubject<String?> { get }
     var searchMessage: Driver<String?> { get }
     var resultsFoundMessage: Driver<String?> { get }
+    
+    func searchBy(text: String?)
 }
 
 final class EnterpriseSearchViewController: UIViewController {
@@ -118,9 +119,11 @@ final class EnterpriseSearchViewController: UIViewController {
             .disposed(by: disposeBag)
         
         searchBar.rx.text
-            .debug()
-//            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(to: viewModel.searchTextSubject)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .bind { [weak self] (text) in
+                self?.viewModel.searchBy(text: text)
+            }
             .disposed(by: disposeBag)
     }
 }

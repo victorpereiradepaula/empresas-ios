@@ -49,6 +49,8 @@ final class AppRouter {
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = true
         navigationBar.tintColor = .primary
+        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black,
+                                             .font: UIFont.rubikMedium(size: 20)]
         
         return navigationController
     }
