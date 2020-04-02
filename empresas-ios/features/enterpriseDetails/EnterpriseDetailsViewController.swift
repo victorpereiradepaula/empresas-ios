@@ -29,14 +29,16 @@ final class EnterpriseDetailsViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .rubikLight(size: 18)
-        label.textAlignment = .justified
-        label.numberOfLines = 0
-        label.textColor = .black
-        return label
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .rubikLight(size: 18)
+        textView.textAlignment = .justified
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isSelectable = false
+        textView.textColor = .black
+        return textView
     }()
     
     private let disposeBag = DisposeBag()
@@ -66,23 +68,24 @@ final class EnterpriseDetailsViewController: UIViewController {
     
     private func setupContraints() {
         view.addSubview(photoImageView)
-        view.addSubview(descriptionLabel)
+        view.addSubview(descriptionTextView)
         
         NSLayoutConstraint.activate([
             photoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             photoImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
             photoImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
             photoImageView.heightAnchor.constraint(equalToConstant: 120),
-            descriptionLabel.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 24),
-            descriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            descriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16)
+            descriptionTextView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 24),
+            descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            descriptionTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
         ])
     }
     
     private func bind() {
         
         viewModel.description
-            .drive(descriptionLabel.rx.text)
+            .drive(descriptionTextView.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.photo
