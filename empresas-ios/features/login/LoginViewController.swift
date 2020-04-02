@@ -69,7 +69,7 @@ final class LoginViewController: UIViewController {
     
     #if DEBUG
     deinit {
-        print(self.description)
+        print("dealloc ---> \(Self.self)")
     }
     #endif
     

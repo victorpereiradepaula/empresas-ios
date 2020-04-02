@@ -26,6 +26,12 @@ final class LoginViewModel: LoginViewModelProtocol {
     private let canShowErrorSubject = BehaviorSubject<Bool>(value: false)
     private let apiErrorSubject = BehaviorSubject<String?>(value: nil)
     
+    #if DEBUG
+    deinit {
+        print("dealloc ---> \(Self.self)")
+    }
+    #endif
+    
     var emailError: Observable<String?> {
         Observable.combineLatest(emailRelay, apiErrorSubject, canShowErrorSubject)
             .map { (email, apiError, canShow) in

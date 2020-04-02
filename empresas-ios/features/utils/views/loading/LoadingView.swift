@@ -31,7 +31,6 @@ final class LoadingView: UIView {
     
     init() {
         super.init(frame: .zero)
-        
         applyLayout()
     }
     
@@ -41,13 +40,13 @@ final class LoadingView: UIView {
     
     #if DEBUG
     deinit {
-        print("dealloc ---> \(String(describing: type(of: self)))")
+        print("dealloc ---> \(Self.self)")
     }
     #endif
     
     private func applyLayout() {
         backgroundColor = .clearGray
-        
+
         addSubview(loadIndicatorView)
         addSubview(smallLoadingIndicator)
         

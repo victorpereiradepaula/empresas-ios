@@ -13,7 +13,13 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     
     private let apiClient = APIClient()
     private let responseSubject = PublishSubject<[Enterprise]>()
-    private var startRequestSubject = PublishSubject<EnterprisesRequest>()
+    private let startRequestSubject = PublishSubject<EnterprisesRequest>()
+    
+    #if DEBUG
+    deinit {
+        print("dealloc ---> \(Self.self)")
+    }
+    #endif
     
     var request: Observable<Void> {
         startRequestSubject
