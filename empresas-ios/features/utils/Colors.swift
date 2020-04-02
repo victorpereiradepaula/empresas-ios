@@ -15,4 +15,10 @@ extension UIColor {
     static let backgroundGray = UIColor(named: "backgroundGray")!
     
     static let clearGray = UIColor(named: "clearGray")!
+    
+    static let lightGreen = UIColor(named: "lightGreen")!
+    
+    static let lightOrange = UIColor(named: "lightOrange")!
+    
+    static let lightBlue = UIColor(named: "lightBlue")!
 }

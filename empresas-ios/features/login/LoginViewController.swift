@@ -35,6 +35,7 @@ final class LoginViewController: UIViewController {
     private lazy var passwordTextField: TextField = {
         let textField = TextField(viewModel: TextFieldViewModel(type: .password, textRelay: viewModel.passwordRelay, error: viewModel.passwordError, delegate: self))
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.tintColor = .gray
         return textField
     }()
     
@@ -62,11 +63,24 @@ final class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    #if DEBUG
+    deinit {
+        print(self.description)
+    }
+    #endif
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         applyLayout()
         bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        headerView.setBottomCurve()
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,8 +94,8 @@ final class LoginViewController: UIViewController {
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind { [weak self] in
                 self?.viewModel.didTapLoginButton()
-            }
-            .disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
     }
     
     private func applyLayout() {
@@ -113,6 +127,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
+// MARK: UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -121,11 +136,38 @@ extension LoginViewController: UITextFieldDelegate {
             self?.headerViewHeightConstraint.constant = 150
         })
     }
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.welcomeLabel.isHidden = false
             self?.headerViewHeightConstraint.constant = 250
         })
+    }
+}
+
+// Thanks Akshay Khadke - https://stackoverflow.com/questions/51498097/how-to-make-curve-top-for-uiview-in-swift
+extension UIView {
+    
+    func setBottomCurve() {
+        let size = bounds.size
+        let origin = bounds.origin
+        
+        let height = size.height
+        let width = size.width
+        let x = origin.x
+        let y = origin.y
+        let offset = height/1.4
+        
+        let rectBounds = CGRect(x: x, y: y, width: width, height: height/2)
+        let rectPath = UIBezierPath(rect: rectBounds)
+        let ovalBounds = CGRect(x: x - offset/2, y: y, width: width + offset, height: height)
+        
+        let ovalPath = UIBezierPath(ovalIn: ovalBounds)
+        rectPath.append(ovalPath)
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = bounds
+        maskLayer.path = rectPath.cgPath
+        self.layer.mask = maskLayer
     }
 }

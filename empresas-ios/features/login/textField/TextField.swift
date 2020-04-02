@@ -40,6 +40,8 @@ final class TextField: UIView {
        let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .backgroundGray
+        textField.font = .rubikLight(size: 16)
+        textField.textColor = .gray
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
         return textField
