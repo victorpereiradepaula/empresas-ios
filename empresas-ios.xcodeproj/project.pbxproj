@@ -10,6 +10,7 @@
 		4627F9DC57E078936ED00055 /* Pods_empresas_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E356FC47F7B6ECC18AFB2B4F /* Pods_empresas_ios.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8D39DFEE2435274000C7441C /* EnterpriseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */; };
 		8D39DFEF2435274000C7441C /* EnterpriseSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */; };
+		8D39DFF1243589AD00C7441C /* EnterpriseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */; };
 		8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CC2432A87000176FBD /* AppDelegate.swift */; };
 		8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CE2432A87000176FBD /* SceneDelegate.swift */; };
 		8DC727D62432A87500176FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DC727D52432A87500176FBD /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		7CA2E479D713DF099E5B1F15 /* Pods-empresas-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-empresas-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-empresas-iosTests/Pods-empresas-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSearchViewController.swift; sourceTree = "<group>"; };
 		8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterpriseSearchViewController.xib; sourceTree = "<group>"; };
+		8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseCellViewModel.swift; sourceTree = "<group>"; };
 		8DC727C92432A87000176FBD /* empresas-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "empresas-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC727CC2432A87000176FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC727CE2432A87000176FBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */,
+				8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */,
 			);
 			path = enterpriseCell;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				8DC727F62432B21800176FBD /* Investor.swift in Sources */,
 				8DC7283D243419BD00176FBD /* UserDefaults.swift in Sources */,
 				8DC7285324342BB000176FBD /* SearchViewModel.swift in Sources */,
+				8D39DFF1243589AD00C7441C /* EnterpriseCellViewModel.swift in Sources */,
 				8DC7286E243510E600176FBD /* CodableModelProtocol.swift in Sources */,
 				8DC7283724340CF800176FBD /* APIRequest.swift in Sources */,
 				8DC728282433983E00176FBD /* TextFieldExtension.swift in Sources */,
