@@ -6,8 +6,9 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
-struct User: Codable {
+struct User: CodableModelProtocol {
     
-    let investor: Investor
-    let enterprise: Enterprise
+    let investor: Investor?
+    let enterprise: Enterprise?
+    let errors: [String]?
 }

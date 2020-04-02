@@ -6,6 +6,18 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
+struct EnterpriseArray: CodableModelProtocol {
+    
+    let enterprises: [Enterprise]
+    let errors: [String]?
+}
+
+struct EnterpriseDetails: CodableModelProtocol {
+    
+    var enterprise: Enterprise?
+    let errors: [String]?
+}
+
 struct Enterprise: Codable {
     
     let id: Int
@@ -19,9 +31,9 @@ struct Enterprise: Codable {
     let ownEnterprise: Bool
     let photo: String?
     let value: Float
-    let shares: Int
+    let shares: Int?
     let sharePrice: Float
-    let ownShares: Int
+    let ownShares: Int?
     let city: String
     let country: String
     let enterpriseType: EnterpriseType
