@@ -10,9 +10,10 @@ import RxSwift
 import RxCocoa
 
 final class LoginViewModel: LoginViewModelProtocol {
-    
+
     let emailRelay = BehaviorRelay<String?>(value: nil)
     let passwordRelay = BehaviorRelay<String?>(value: nil)
+    private let viewStateSubject = BehaviorSubject<ViewState>(value: .normal)
     
     private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
@@ -47,19 +48,26 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
     
+    var viewState: Driver<ViewState> {
+        viewStateSubject.asDriver(onErrorJustReturn: .normal)
+    }
+    
     func didTapLoginButton() {
         apiErrorSubject.onNext(nil)
         canShowErrorSubject.onNext(true)
         guard let email = emailRelay.value, let password = passwordRelay.value, !email.isEmpty, !password.isEmpty else { return }
-        
+        viewStateSubject.onNext(.loading)
         let loginRequest = LoginRequest(email: email, password: password)
         
-        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onError: { [weak self] (error) in
-            self?.apiErrorSubject.onNext(error.localizedDescription)
-        })
+        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest)
         
         requestObservable
-            .subscribe()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewStateSubject.onNext(.normal)
+            }, onError: { [weak self] (error) in
+                self?.apiErrorSubject.onNext(error.localizedDescription)
+                self?.viewStateSubject.onNext(.normal)
+            })
             .disposed(by: disposeBag)
     }
 }

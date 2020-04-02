@@ -17,6 +17,7 @@ protocol LoginViewModelProtocol {
     var passwordRelay: BehaviorRelay<String?> { get }
     var emailError: Observable<String?> { get }
     var passwordError: Observable<String?> { get }
+    var viewState: Driver<ViewState> { get }
     
     func didTapLoginButton()
 }
@@ -54,6 +55,7 @@ final class LoginViewController: UIViewController {
     }()
     
     private let viewModel: LoginViewModelProtocol
+    internal var loadingView: LoadingView?
     private let disposeBag = DisposeBag()
     
     init(viewModel: LoginViewModelProtocol) {
@@ -98,6 +100,12 @@ final class LoginViewController: UIViewController {
                 self?.viewModel.didTapLoginButton()
         }
         .disposed(by: disposeBag)
+        
+        viewModel.viewState
+            .drive(onNext: { [weak self] (viewState) in
+                self?.setViewState(viewState: viewState)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func applyLayout() {
@@ -144,5 +152,17 @@ extension LoginViewController: UITextFieldDelegate {
             self?.welcomeLabel.isHidden = false
             self?.headerViewHeightConstraint.constant = 250
         })
+    }
+}
+
+// MARK: LoadingProtocol
+extension LoginViewController: LoadingProtocol {
+    
+    func allocLoadingView(_ loadingView: LoadingView) {
+        self.loadingView = loadingView
+    }
+    
+    func deallocLoadingView() {
+        loadingView = nil
     }
 }
