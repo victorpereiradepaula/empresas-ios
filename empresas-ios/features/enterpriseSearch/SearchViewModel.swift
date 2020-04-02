@@ -12,8 +12,20 @@ import RxCocoa
 final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     
     private let apiClient = APIClient()
-    let disposeBag = DisposeBag()
     private let responseSubject = PublishSubject<[Enterprise]>()
+    private var startRequestSubject = PublishSubject<EnterprisesRequest>()
+    
+    var request: Observable<Void> {
+        startRequestSubject
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .flatMap { [unowned self] (request) -> Observable<EnterpriseArray> in
+                self.apiClient.send(apiRequest: request)
+        }
+        .map { [weak self] (enterpriseArray) -> Void in
+            self?.responseSubject.onNext(enterpriseArray.enterprises)
+            return ()
+        }
+    }
     
     var enterprises: Driver<[Enterprise]> {
         responseSubject.asDriver(onErrorJustReturn: [])
@@ -40,12 +52,7 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
         guard let text = text, !text.isEmpty else { return }
         
         let request = EnterprisesRequest(name: text)
-        
-        let searchRequest: Observable<EnterpriseArray> = apiClient.send(apiRequest: request)
-        searchRequest
-            .map { $0.enterprises }
-            .bind(to: responseSubject)
-            .disposed(by: disposeBag)
+        startRequestSubject.onNext(request)
     }
     
     func colorTo(index: Int) -> UIColor {

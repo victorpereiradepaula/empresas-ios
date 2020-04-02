@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol EnterpriseSearchViewModelProtocol {
     
+    var request: Observable<Void> { get }
     var enterprises: Driver<[Enterprise]> { get }
     var searchMessage: Driver<String?> { get }
     var resultsFoundMessage: Driver<String?> { get }
@@ -114,6 +115,10 @@ final class EnterpriseSearchViewController: UIViewController {
                 self?.enterprises = enterprises
                 self?.tableView.reloadData()
             })
+            .disposed(by: disposeBag)
+        
+        viewModel.request
+            .subscribe()
             .disposed(by: disposeBag)
     }
 }
