@@ -32,6 +32,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 return "Informe o email"
         }
     }
+    
     var passwordError: Observable<String?> {
         Observable.combineLatest(passwordRelay, apiErrorSubject, canShowErrorSubject)
             .map { (password, apiError, canShow) in

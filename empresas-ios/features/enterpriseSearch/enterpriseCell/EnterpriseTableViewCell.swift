@@ -8,12 +8,14 @@
 
 import UIKit
 
+// MARK: EnterpriseCellViewModelProtocol
 protocol EnterpriseCellViewModelProtocol {
     
     var name: String { get }
     var enterpriseViewBackgroundColor: UIColor { get }
 }
 
+// MARK: EnterpriseTableViewCell
 final class EnterpriseTableViewCell: UITableViewCell {
 
     private lazy var enterpriseView: EnterpriseView = {

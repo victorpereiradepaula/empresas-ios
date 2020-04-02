@@ -6,8 +6,6 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
-import Foundation
-
 struct EnterprisesRequest: APIRequest {
     
     var method: RequestType = .GET

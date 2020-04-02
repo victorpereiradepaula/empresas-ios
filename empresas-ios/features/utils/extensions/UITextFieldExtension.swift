@@ -1,5 +1,5 @@
 //
-//  TextFieldExtension.swift
+//  UITextFieldExtension.swift
 //  empresas-ios
 //
 //  Created by Victor Pereira on 31/03/20.
@@ -13,20 +13,22 @@ import RxGesture
 extension UITextField {
     
     func setPadding() {
-        leftView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: frame.size.height))
+        let height = frame.size.height
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: height))
         leftViewMode = .always
         
-        rightView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: frame.size.height))
+        rightView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: height))
         rightViewMode = .always
     }
     
     func setRightView(image: UIImage?, color: UIColor?, action: @escaping (() -> ())) {
+        let height = frame.size.height
         if let image = image, let color = color {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 48))
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: height))
             imageView.image = image
             imageView.contentMode = .center
             
-            let containerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 32, height: 48))
+            let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 32, height: height))
             containerView.addSubview(imageView)
             rightView = containerView
             rightViewMode = .always
@@ -38,7 +40,7 @@ extension UITextField {
                 .bind { _ in action() }
             
         } else {
-            rightView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: frame.size.height))
+            rightView = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: height))
             rightViewMode = .always
         }
     }

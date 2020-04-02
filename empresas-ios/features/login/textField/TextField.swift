@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: TextFieldProtocol
 protocol TextFieldProtocol {
     
     var placeholder: String { get }
@@ -26,6 +27,7 @@ protocol TextFieldProtocol {
     func didTapTextFieldRightView()
 }
 
+// MARK: TextField
 final class TextField: UIView {
     
     private lazy var placeholderLabel: UILabel = {
@@ -68,6 +70,10 @@ final class TextField: UIView {
         bind()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func bind() {
         textField.keyboardType = viewModel.keyboardType
         placeholderLabel.text = viewModel.placeholder
@@ -107,10 +113,6 @@ final class TextField: UIView {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupConstraints() {
