@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: EnterpriseSearchViewModelProtocol
 protocol EnterpriseSearchViewModelProtocol {
     
     var request: Observable<Void> { get }
@@ -21,6 +22,7 @@ protocol EnterpriseSearchViewModelProtocol {
     func colorTo(index: Int) -> UIColor
 }
 
+// MARK: EnterpriseSearchViewController
 final class EnterpriseSearchViewController: UIViewController {
     
     @IBOutlet weak var headerViewHeightConstraint: NSLayoutConstraint!
@@ -52,7 +54,7 @@ final class EnterpriseSearchViewController: UIViewController {
     
     #if DEBUG
     deinit {
-        print(self.description)
+        print("dealloc ---> \(Self.self)")
     }
     #endif
     

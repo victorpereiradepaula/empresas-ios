@@ -46,10 +46,6 @@ final class SessionManager {
         return userSession
     }
     
-    var hasSession: Bool {
-        stateRelay.value != .unauthenticated
-    }
-    
     func updateSession(_ userSession: UserSession) {
         UserDefaults.standard.setUserSession(userSession)
         stateRelay.accept(.loggedIn(userSession: userSession))

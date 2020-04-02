@@ -10,14 +10,27 @@ import RxSwift
 import RxCocoa
 
 final class LoginViewModel: LoginViewModelProtocol {
-    
+
+    #if DEBUG
+    let emailRelay = BehaviorRelay<String?>(value: "testeapple@ioasys.com.br")
+    let passwordRelay = BehaviorRelay<String?>(value: "12341234")
+    #else
     let emailRelay = BehaviorRelay<String?>(value: nil)
     let passwordRelay = BehaviorRelay<String?>(value: nil)
+    #endif
+    
+    private let viewStateSubject = BehaviorSubject<ViewState>(value: .normal)
     
     private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
     private let canShowErrorSubject = BehaviorSubject<Bool>(value: false)
     private let apiErrorSubject = BehaviorSubject<String?>(value: nil)
+    
+    #if DEBUG
+    deinit {
+        print("dealloc ---> \(Self.self)")
+    }
+    #endif
     
     var emailError: Observable<String?> {
         Observable.combineLatest(emailRelay, apiErrorSubject, canShowErrorSubject)
@@ -32,6 +45,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 return "Informe o email"
         }
     }
+    
     var passwordError: Observable<String?> {
         Observable.combineLatest(passwordRelay, apiErrorSubject, canShowErrorSubject)
             .map { (password, apiError, canShow) in
@@ -46,19 +60,26 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
     
+    var viewState: Driver<ViewState> {
+        viewStateSubject.asDriver(onErrorJustReturn: .normal)
+    }
+    
     func didTapLoginButton() {
         apiErrorSubject.onNext(nil)
         canShowErrorSubject.onNext(true)
         guard let email = emailRelay.value, let password = passwordRelay.value, !email.isEmpty, !password.isEmpty else { return }
-        
+        viewStateSubject.onNext(.loading)
         let loginRequest = LoginRequest(email: email, password: password)
         
-        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest).do(onError: { [weak self] (error) in
-            self?.apiErrorSubject.onNext(error.localizedDescription)
-        })
+        let requestObservable: Observable<User> = apiClient.send(apiRequest: loginRequest)
         
         requestObservable
-            .subscribe()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewStateSubject.onNext(.normal)
+            }, onError: { [weak self] (error) in
+                self?.apiErrorSubject.onNext(error.localizedDescription)
+                self?.viewStateSubject.onNext(.normal)
+            })
             .disposed(by: disposeBag)
     }
 }

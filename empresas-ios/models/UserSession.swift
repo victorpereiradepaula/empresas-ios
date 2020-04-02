@@ -7,6 +7,7 @@
 //
 
 struct UserSession {
+    
     let client: String
     let accessToken: String
     let uid: String

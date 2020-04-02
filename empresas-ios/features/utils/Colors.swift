@@ -21,4 +21,6 @@ extension UIColor {
     static let lightOrange = UIColor(named: "lightOrange")!
     
     static let lightBlue = UIColor(named: "lightBlue")!
+    
+    static let lightPink = UIColor(named: "lightPink")!
 }

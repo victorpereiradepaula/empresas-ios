@@ -24,6 +24,12 @@ final class EnterpriseDetailsViewModel: EnterpriseDetailsViewModelProtocol {
         enterpriseDetails = apiClient.send(apiRequest: EnterprisesRequest(id: enterprise.id)).share()
     }
     
+    #if DEBUG
+    deinit {
+        print("dealloc ---> \(Self.self)")
+    }
+    #endif
+    
     var name: String {
         enterprise.enterpriseName
     }

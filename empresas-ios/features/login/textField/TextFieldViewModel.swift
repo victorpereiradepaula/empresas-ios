@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 
+// MARK: TextFieldType
 enum TextFieldType {
     case email, password
     
@@ -31,6 +32,7 @@ enum TextFieldType {
     }
 }
 
+// MARK: TextFieldViewModel
 final class TextFieldViewModel {
     
     let placeholder: String
@@ -103,7 +105,6 @@ extension TextFieldViewModel: TextFieldProtocol {
         switch type {
         case .password:
             isSecureTextEntryRelay.accept(!isSecureTextEntryRelay.value)
-            
         default:
             break
         }
