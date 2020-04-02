@@ -8,19 +8,40 @@
 
 import UIKit
 
+protocol EnterpriseCellViewModelProtocol {
+    
+    var name: String { get }
+    var enterpriseViewBackgroundColor: UIColor { get }
+}
+
 final class EnterpriseTableViewCell: UITableViewCell {
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+    private lazy var enterpriseView: EnterpriseView = {
+        let view = EnterpriseView(name: "", image: nil, backgroundColor: .black)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 4
+        return view
+    }()
+    
+    func populateWith(viewModel: EnterpriseCellViewModelProtocol) {
+        enterpriseView.setValues(name: viewModel.name, image: nil, backgroundColor: viewModel.enterpriseViewBackgroundColor)
+        setupConstraints()
         applyLayout()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupConstraints() {
+        addSubview(enterpriseView)
+        
+        addConstraints([
+            enterpriseView.topAnchor.constraint(equalTo: topAnchor),
+            enterpriseView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            enterpriseView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            enterpriseView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+        ])
     }
     
     private func applyLayout() {
         backgroundColor = .white
-        textLabel?.textColor = .black
+        selectedBackgroundView = UIView()
     }
 }

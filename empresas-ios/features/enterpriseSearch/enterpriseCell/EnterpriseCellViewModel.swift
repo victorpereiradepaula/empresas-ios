@@ -6,8 +6,15 @@
 //  Copyright © 2020 Victor Pereira. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-final class EnterpriseCellViewModel {
+final class EnterpriseCellViewModel: EnterpriseCellViewModelProtocol {
     
+    let name: String
+    let enterpriseViewBackgroundColor: UIColor
+    
+    init(enterprise: Enterprise, enterpriseViewBackgroundColor: UIColor) {
+        self.name = enterprise.enterpriseName
+        self.enterpriseViewBackgroundColor = enterpriseViewBackgroundColor
+    }
 }

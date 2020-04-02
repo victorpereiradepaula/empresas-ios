@@ -11,6 +11,7 @@
 		8D39DFEE2435274000C7441C /* EnterpriseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */; };
 		8D39DFEF2435274000C7441C /* EnterpriseSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */; };
 		8D39DFF1243589AD00C7441C /* EnterpriseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */; };
+		8D39DFF324358BCC00C7441C /* EnterpriseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFF224358BCC00C7441C /* EnterpriseView.swift */; };
 		8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CC2432A87000176FBD /* AppDelegate.swift */; };
 		8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CE2432A87000176FBD /* SceneDelegate.swift */; };
 		8DC727D62432A87500176FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DC727D52432A87500176FBD /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		8D39DFEC2435274000C7441C /* EnterpriseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSearchViewController.swift; sourceTree = "<group>"; };
 		8D39DFED2435274000C7441C /* EnterpriseSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterpriseSearchViewController.xib; sourceTree = "<group>"; };
 		8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseCellViewModel.swift; sourceTree = "<group>"; };
+		8D39DFF224358BCC00C7441C /* EnterpriseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseView.swift; sourceTree = "<group>"; };
 		8DC727C92432A87000176FBD /* empresas-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "empresas-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC727CC2432A87000176FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC727CE2432A87000176FBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				8DC728232433562600176FBD /* Fonts.swift */,
 				8DC728272433983E00176FBD /* TextFieldExtension.swift */,
 				8DC728342433FBAA00176FBD /* TwoWayDataBind.swift */,
+				8D39DFF224358BCC00C7441C /* EnterpriseView.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -302,8 +305,8 @@
 		8DC7285624342D9300176FBD /* enterpriseCell */ = {
 			isa = PBXGroup;
 			children = (
-				8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */,
 				8D39DFF0243589AD00C7441C /* EnterpriseCellViewModel.swift */,
+				8DC7285724342DCA00176FBD /* EnterpriseTableViewCell.swift */,
 			);
 			path = enterpriseCell;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				8DC727F02432B17100176FBD /* Enterprise.swift in Sources */,
 				8DC7284D243424BF00176FBD /* AppRouter.swift in Sources */,
 				8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */,
+				8D39DFF324358BCC00C7441C /* EnterpriseView.swift in Sources */,
 				8DC7285924342DCA00176FBD /* EnterpriseTableViewCell.swift in Sources */,
 				8DC727F82432B24C00176FBD /* User.swift in Sources */,
 				8DC7284124341C1400176FBD /* SessionManager.swift in Sources */,

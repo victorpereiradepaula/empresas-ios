@@ -17,6 +17,7 @@ protocol EnterpriseSearchViewModelProtocol {
     var resultsFoundMessage: Driver<String?> { get }
     
     func searchBy(text: String?)
+    func colorTo(index: Int) -> UIColor
 }
 
 final class EnterpriseSearchViewController: UIViewController {
@@ -36,7 +37,7 @@ final class EnterpriseSearchViewController: UIViewController {
     
     private var enterprises: [Enterprise] = []
     private let viewModel: EnterpriseSearchViewModelProtocol
-    private let cellIdentifier = "cellIdentifier"
+    private let cellIdentifier = "EnterpriseTableViewCell"
     private let disposeBag = DisposeBag()
     
     init(viewModel: EnterpriseSearchViewModelProtocol) {
@@ -56,7 +57,7 @@ final class EnterpriseSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.searchTextField.delegate = self
+        searchBar.delegate = self
         setupTableView()
         applyLayout()
         bind()
@@ -72,21 +73,18 @@ final class EnterpriseSearchViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        tableView.endEditing(true)
-    }
-    
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
         
         tableView.register(EnterpriseTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
     private func applyLayout() {
         view.backgroundColor = .white
-        tableView.backgroundColor = .white
         
         searchBar.searchTextField.backgroundColor = .backgroundGray
         searchBar.searchTextField.font = .rubikLight(size: 18)
@@ -117,14 +115,6 @@ final class EnterpriseSearchViewController: UIViewController {
                 self?.tableView.reloadData()
             })
             .disposed(by: disposeBag)
-        
-        searchBar.rx.text
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .bind { [weak self] (text) in
-                self?.viewModel.searchBy(text: text)
-            }
-            .disposed(by: disposeBag)
     }
 }
 
@@ -136,13 +126,15 @@ extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
-        cell.textLabel?.text = enterprises[indexPath.row].enterpriseName
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? EnterpriseTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.populateWith(viewModel: EnterpriseCellViewModel(enterprise: enterprises[indexPath.row], enterpriseViewBackgroundColor: viewModel.colorTo(index: indexPath.row)))
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel(enterprise: enterprises[indexPath.row]))
+        let enterpriseDetailsViewController = EnterpriseDetailsViewController(viewModel: EnterpriseDetailsViewModel(enterprise: enterprises[indexPath.row], enterpriseViewBackgroundColor: viewModel.colorTo(index: indexPath.row)))
         navigationController?.pushViewController(enterpriseDetailsViewController, animated: true)
     }
     
@@ -151,16 +143,24 @@ extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDele
     }
 }
 
-// MARK: UITextFieldDelegate
-extension EnterpriseSearchViewController: UITextFieldDelegate {
+// MARK: UISearchBarDelegate
+extension EnterpriseSearchViewController: UISearchBarDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchBy(text: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.headerViewHeightConstraint.constant = 150
         })
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.headerViewHeightConstraint.constant = 250
         })

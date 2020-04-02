@@ -14,19 +14,17 @@ protocol EnterpriseDetailsViewModelProtocol {
     
     var name: String { get }
     var description: Driver<String?> { get }
-    var photo: Driver<URL?> { get }
+    var enterpriseViewBackgroundColor: UIColor { get }
 }
 
 final class EnterpriseDetailsViewController: UIViewController {
     
     private lazy var customBackButton = UIBarButtonItem(image: .backIcon, style: .plain, target: self, action: #selector(popViewController))
     
-    private lazy var photoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .cyan
-        return imageView
+    private lazy var enterpriseView: EnterpriseView = {
+        let view = EnterpriseView(name: viewModel.name, image: nil, backgroundColor: viewModel.enterpriseViewBackgroundColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private lazy var descriptionTextView: UITextView = {
@@ -67,15 +65,14 @@ final class EnterpriseDetailsViewController: UIViewController {
     }
     
     private func setupContraints() {
-        view.addSubview(photoImageView)
+        view.addSubview(enterpriseView)
         view.addSubview(descriptionTextView)
         
         NSLayoutConstraint.activate([
-            photoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            photoImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            photoImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            photoImageView.heightAnchor.constraint(equalToConstant: 120),
-            descriptionTextView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 24),
+            enterpriseView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            enterpriseView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            enterpriseView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            descriptionTextView.topAnchor.constraint(equalTo: enterpriseView.bottomAnchor, constant: 24),
             descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             descriptionTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
@@ -86,14 +83,6 @@ final class EnterpriseDetailsViewController: UIViewController {
         
         viewModel.description
             .drive(descriptionTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.photo
-            .drive(onNext: { [weak self] (url) in
-                if let photoURL = url {
-                    self?.photoImageView.load(url: photoURL)
-                }
-            })
             .disposed(by: disposeBag)
     }
     
@@ -106,20 +95,5 @@ final class EnterpriseDetailsViewController: UIViewController {
     
     @objc private func popViewController() {
         navigationController?.popViewController(animated: true)
-    }
-}
-
-extension UIImageView {
-    
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
     }
 }

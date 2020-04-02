@@ -47,4 +47,14 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
             .bind(to: responseSubject)
             .disposed(by: disposeBag)
     }
+    
+    func colorTo(index: Int) -> UIColor {
+        if index % 2 == 0 {
+            return .lightOrange
+        } else if index % 3 == 0 {
+            return .lightGreen
+        } else {
+            return .lightBlue
+        }
+    }
 }
