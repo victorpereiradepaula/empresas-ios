@@ -8,20 +8,25 @@
 
 import UIKit
 
+// MARK: ViewStare
 enum ViewState {
     case normal
     case loading
 }
 
+// MARK: LoadingView
 final class LoadingView: UIView {
     
-    private lazy var activityIndicatorView: UIActivityIndicatorView = {
-        let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.color = .lightPink
-        activityIndicatorView.startAnimating()
-        activityIndicatorView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        return activityIndicatorView
+    private lazy var loadIndicatorView: LoadIndicatorView = {
+        let loadIndicatorView = LoadIndicatorView(frame: .zero)
+        loadIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return loadIndicatorView
+    }()
+    
+    private lazy var smallLoadingIndicator: LoadIndicatorView = {
+        let loadIndicatorView = LoadIndicatorView(frame: .zero)
+        loadIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return loadIndicatorView
     }()
     
     init() {
@@ -43,10 +48,21 @@ final class LoadingView: UIView {
     private func applyLayout() {
         backgroundColor = .clearGray
         
-        addSubview(activityIndicatorView)
+        addSubview(loadIndicatorView)
+        addSubview(smallLoadingIndicator)
+        
         addConstraints([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            loadIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            loadIndicatorView.heightAnchor.constraint(equalToConstant: 72),
+            loadIndicatorView.widthAnchor.constraint(equalToConstant: 72),
+            smallLoadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            smallLoadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+            smallLoadingIndicator.heightAnchor.constraint(equalToConstant: 47),
+            smallLoadingIndicator.widthAnchor.constraint(equalToConstant: 47)
         ])
+        
+        loadIndicatorView.rotate(clockWise: true)
+        smallLoadingIndicator.rotate(clockWise: false)
     }
 }

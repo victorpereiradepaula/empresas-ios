@@ -15,6 +15,7 @@
 		8D39DFF72435AA8B00C7441C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFF62435AA8B00C7441C /* UIViewExtensions.swift */; };
 		8D39DFF92435ABF300C7441C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFF82435ABF300C7441C /* LoadingView.swift */; };
 		8D39DFFC2435ADDA00C7441C /* LoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFFB2435ADDA00C7441C /* LoadingProtocol.swift */; };
+		8D39DFFE2435B63800C7441C /* LoadIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D39DFFD2435B63800C7441C /* LoadIndicatorView.swift */; };
 		8DC727CD2432A87000176FBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CC2432A87000176FBD /* AppDelegate.swift */; };
 		8DC727CF2432A87000176FBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC727CE2432A87000176FBD /* SceneDelegate.swift */; };
 		8DC727D62432A87500176FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DC727D52432A87500176FBD /* Assets.xcassets */; };
@@ -77,6 +78,7 @@
 		8D39DFF62435AA8B00C7441C /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		8D39DFF82435ABF300C7441C /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		8D39DFFB2435ADDA00C7441C /* LoadingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingProtocol.swift; sourceTree = "<group>"; };
+		8D39DFFD2435B63800C7441C /* LoadIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadIndicatorView.swift; sourceTree = "<group>"; };
 		8DC727C92432A87000176FBD /* empresas-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "empresas-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DC727CC2432A87000176FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DC727CE2432A87000176FBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		8D39DFFA2435ADCB00C7441C /* loading */ = {
 			isa = PBXGroup;
 			children = (
+				8D39DFFD2435B63800C7441C /* LoadIndicatorView.swift */,
 				8D39DFF82435ABF300C7441C /* LoadingView.swift */,
 				8D39DFFB2435ADDA00C7441C /* LoadingProtocol.swift */,
 			);
@@ -582,6 +585,7 @@
 				8DC7283B24340EA200176FBD /* APIClient.swift in Sources */,
 				8DC727F02432B17100176FBD /* Enterprise.swift in Sources */,
 				8DC7284D243424BF00176FBD /* AppRouter.swift in Sources */,
+				8D39DFFE2435B63800C7441C /* LoadIndicatorView.swift in Sources */,
 				8DC728672434470F00176FBD /* EnterpriseDetailsViewController.swift in Sources */,
 				8D39DFF324358BCC00C7441C /* EnterpriseView.swift in Sources */,
 				8D39DFFC2435ADDA00C7441C /* LoadingProtocol.swift in Sources */,

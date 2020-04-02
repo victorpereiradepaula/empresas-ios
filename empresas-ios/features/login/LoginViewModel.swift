@@ -11,8 +11,14 @@ import RxCocoa
 
 final class LoginViewModel: LoginViewModelProtocol {
 
+    #if DEBUG
+    let emailRelay = BehaviorRelay<String?>(value: "testeapple@ioasys.com.br")
+    let passwordRelay = BehaviorRelay<String?>(value: "12341234")
+    #else
     let emailRelay = BehaviorRelay<String?>(value: nil)
     let passwordRelay = BehaviorRelay<String?>(value: nil)
+    #endif
+    
     private let viewStateSubject = BehaviorSubject<ViewState>(value: .normal)
     
     private let apiClient = APIClient()
