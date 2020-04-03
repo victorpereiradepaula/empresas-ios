@@ -44,6 +44,7 @@ final class LoadIndicatorView: UIView {
     
     func rotate(duration: CFTimeInterval = 7, clockWise: Bool) {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
+        animation.repeatDuration = .infinity
         
         let startAngle: CGFloat = 0
         let endAgle: CGFloat = .pi * 12

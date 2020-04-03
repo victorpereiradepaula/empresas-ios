@@ -82,9 +82,7 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         headerView.setBottomCurve()
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -141,17 +139,16 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.welcomeLabel.isHidden = true
-            self?.headerViewHeightConstraint.constant = 150
-        })
+        UIView.animate(withDuration: 0.2) {
+            self.welcomeLabel.isHidden = true
+            self.headerViewHeightConstraint.constant = 150
+            self.view.layoutIfNeeded()
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.welcomeLabel.isHidden = false
-            self?.headerViewHeightConstraint.constant = 250
-        })
+        self.welcomeLabel.isHidden = false
+        self.headerViewHeightConstraint.constant = 250
     }
 }
 
