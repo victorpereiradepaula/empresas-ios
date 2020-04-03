@@ -14,6 +14,7 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
     private let apiClient = APIClient()
     private let responseSubject = PublishSubject<[Enterprise]>()
     private let startRequestSubject = PublishSubject<EnterprisesRequest>()
+    private let viewStateSubject = BehaviorSubject<ViewState>(value: .normal)
     
     #if DEBUG
     deinit {
@@ -26,11 +27,12 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .flatMap { [unowned self] (request) -> Observable<EnterpriseArray> in
                 self.apiClient.send(apiRequest: request)
-        }
-        .map { [weak self] (enterpriseArray) -> Void in
-            self?.responseSubject.onNext(enterpriseArray.enterprises)
-            return ()
-        }
+            }
+            .map { [weak self] (enterpriseArray) -> Void in
+                self?.responseSubject.onNext(enterpriseArray.enterprises)
+                self?.viewStateSubject.onNext(.normal)
+                return ()
+            }
     }
     
     var enterprises: Driver<[Enterprise]> {
@@ -54,8 +56,13 @@ final class EnterpriseSearchViewModel: EnterpriseSearchViewModelProtocol {
         .asDriver(onErrorJustReturn: nil)
     }
     
+    var viewState: Driver<ViewState> {
+        viewStateSubject.asDriver(onErrorJustReturn: .normal)
+    }
+    
     func searchBy(text: String?) {
         guard let text = text, !text.isEmpty else { return }
+        viewStateSubject.onNext(.loading)
         
         let request = EnterprisesRequest(name: text)
         startRequestSubject.onNext(request)

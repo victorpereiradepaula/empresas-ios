@@ -17,6 +17,7 @@ protocol EnterpriseSearchViewModelProtocol {
     var enterprises: Driver<[Enterprise]> { get }
     var searchMessage: Driver<String?> { get }
     var resultsFoundMessage: Driver<String?> { get }
+    var viewState: Driver<ViewState> { get }
     
     func searchBy(text: String?)
     func colorTo(index: Int) -> UIColor
@@ -30,6 +31,8 @@ final class EnterpriseSearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    private lazy var footerView = UIView(frame: tableView.bounds)
+    
     private lazy var messageLabel: UILabel = {
         let label = UILabel(frame: tableView.bounds)
         label.font = .rubikLight(size: 18)
@@ -37,6 +40,8 @@ final class EnterpriseSearchViewController: UIViewController {
         label.textColor = .gray
         return label
     }()
+    
+    private lazy var loadingView = LoadingView(frame: tableView.bounds, backgroundColor: .white)
     
     private var enterprises: [Enterprise] = []
     private let viewModel: EnterpriseSearchViewModelProtocol
@@ -71,6 +76,11 @@ final class EnterpriseSearchViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchBar.becomeFirstResponder()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = false
@@ -102,7 +112,24 @@ final class EnterpriseSearchViewController: UIViewController {
         resultsFoundLabel.text = nil
     }
     
+    private func setupFooterView(_ viewState: ViewState) {
+        footerView.subviews.forEach { $0.removeFromSuperview() }
+        switch viewState {
+        case .normal:
+            footerView.addSubview(messageLabel)
+        case .loading:
+            footerView.addSubview(loadingView)
+        }
+    }
+    
     private func bind() {
+        
+        viewModel.viewState
+            .distinctUntilChanged()
+            .drive(onNext: { [weak self] (viewState) in
+                self?.setupFooterView(viewState)
+            })
+            .disposed(by: disposeBag)
         
         viewModel.resultsFoundMessage
             .drive(resultsFoundLabel.rx.text)
@@ -146,7 +173,7 @@ extension EnterpriseSearchViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        messageLabel
+        footerView
     }
 }
 
@@ -162,14 +189,16 @@ extension EnterpriseSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.headerViewHeightConstraint.constant = 150
-        })
+        UIView.animate(withDuration: 0.2) {
+            self.headerViewHeightConstraint.constant = 150
+            self.view.layoutIfNeeded()
+        }
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.headerViewHeightConstraint.constant = 250
-        })
+        UIView.animate(withDuration: 0.2) {
+            self.headerViewHeightConstraint.constant = 250
+            self.view.layoutIfNeeded()
+        }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import RxCocoa
 import Foundation
 
 final class APIClient {
@@ -20,7 +21,7 @@ final class APIClient {
     }()
     
     func send<T: CodableModelProtocol>(apiRequest: APIRequest) -> Observable<T> {
-        return Observable<T>.create { observer in
+        Observable<T>.create { observer in
             let request = apiRequest.request(with: self.baseURL)
             print(request)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

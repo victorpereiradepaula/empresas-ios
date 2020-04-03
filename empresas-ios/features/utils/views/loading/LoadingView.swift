@@ -29,8 +29,9 @@ final class LoadingView: UIView {
         return loadIndicatorView
     }()
     
-    init() {
-        super.init(frame: .zero)
+    init(frame: CGRect = .zero, backgroundColor: UIColor = .clearGray) {
+        super.init(frame: frame)
+        self.backgroundColor = backgroundColor
         applyLayout()
     }
     
@@ -44,9 +45,13 @@ final class LoadingView: UIView {
     }
     #endif
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        loadIndicatorView.rotate(clockWise: true)
+        smallLoadingIndicator.rotate(clockWise: false)
+    }
+    
     private func applyLayout() {
-        backgroundColor = .clearGray
-
         addSubview(loadIndicatorView)
         addSubview(smallLoadingIndicator)
         
@@ -60,8 +65,5 @@ final class LoadingView: UIView {
             smallLoadingIndicator.heightAnchor.constraint(equalToConstant: 47),
             smallLoadingIndicator.widthAnchor.constraint(equalToConstant: 47)
         ])
-        
-        loadIndicatorView.rotate(clockWise: true)
-        smallLoadingIndicator.rotate(clockWise: false)
     }
 }
