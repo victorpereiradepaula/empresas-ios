@@ -22,4 +22,4 @@ This app was created for the selection process of ioasys.
 - [x] Show company details
 
 ## Samples
-![App](https://i.imgur.com/v6sN7rY.gifv)
+![App](https://i.imgur.com/v6sN7rY.gif)
