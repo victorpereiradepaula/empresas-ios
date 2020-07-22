@@ -1,40 +1,25 @@
-![N|Solid](logo_ioasys.png)
+# Empresas - iOS
 
-# README #
+This app allows you to search, list and view company details. Company information is obtained by requesting a third-party API, after user authentication.
 
-Estes documento README tem como objetivo fornecer as informações necessárias para realização do projeto Empresas.
+This app was created for the selection process of ioasys.
 
-### O QUE FAZER ? ###
+[![GitHub license](https://img.shields.io/github/license/victorpereiradepaula/empresas-ios)](https://github.com/victorpereiradepaula/empresas-ios/blob/master/LICENSE)
+![Xcode 11.5+](https://img.shields.io/badge/Xcode-11.5%2B-blue.svg)
+![Swift 4.0+](https://img.shields.io/badge/Swift-4.0%2B-orange.svg)
+![iOS 11.0+](https://img.shields.io/badge/iOS-11.0%2B-9cf)
 
-* Você deve fazer um fork deste repositório, criar o código e ao finalizar, enviar o link do seu repositório para a nossa equipe. Lembre-se, NÃO é necessário criar um Pull Request para isso.
-* Nós iremos avaliar e retornar por email o resultado do seu teste.
+## Table of Contents
 
-### ESCOPO DO PROJETO ###
+1. [Features](#features)
+1. [Samples](#samples)
 
-* Deve ser criado um aplicativo iOS utilizando Objective C ou Swift com as seguintes especificações:
-* Login e acesso de Usuário já registrado
-	* Para o login usamos padrões OAuth 2.0. Na resposta de sucesso do login a api retornará 3 custom headers (access-token, client, uid);
-	* Para ter acesso as demais APIS precisamos enviar esses 3 custom headers para a API autorizar a requisição;
-* Listagem de Empresas
-* Detalhamento de Empresas
+## Features
 
-### Informações Importantes ###
+- [x] Login
+- [x] Search companies
+- [x] List companies
+- [x] Show company details
 
-* Layout e recortes disponíveis no Figma (http://bit.ly/testeios)
-
-* Você deve fazer um cadastro no Figma para ter acesso ao layout.
-
-* Integração disponível a partir de uma collection para Postman (https://www.getpostman.com/apps) disponível neste repositório.
-
-* Independente de onde conseguiu chegar no teste é importante disponibilizar seu fonte para analisarmos.
-
-### Dados para Teste ###
-
-* Servidor: https://empresas.ioasys.com.br/api
-* Versão da API: v1
-* Usuário de Teste: testeapple@ioasys.com.br
-* Senha de Teste : 12341234
-
-### Dicas ###
-
-* Temos um framework muito completo que pode te ajudar em tudo: https://github.com/JotaMelo/iOSHelpers-Swift ou https://github.com/JotaMelo/iOSHelpers
+## Samples
+![App](https://i.imgur.com/v6sN7rY.gifv)
